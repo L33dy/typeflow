@@ -1,0 +1,17 @@
+{
+  "name": "mark-it",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --experimental-modules",
+    "build": "esbuild index.js --bundle --platform=node --outdir=dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^22.0.1",
+    "esbuild": "^0.16.17",
+    "marked": "^4.2.5"
+  }
+}
