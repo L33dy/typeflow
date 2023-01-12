@@ -2,9 +2,10 @@
   "name": "mark-it",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "app/initializator/main.js",
   "scripts": {
-    "start": "esbuild index.js --bundle --platform=node --outdir=dist | electron .",
+    "start": "electron .",
+    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron ."
   },
   "author": "",
   "license": "ISC",

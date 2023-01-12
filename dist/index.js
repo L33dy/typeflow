@@ -2205,13 +2205,11 @@ var require_marked = __commonJS({
   }
 });
 
-// index.js
+// app/renderer/index.js
 var marked = require_marked();
 var editor = document.getElementById("editor");
 var preview = document.getElementById("preview");
-preview.contentEditable = true;
-preview.addEventListener("input", () => {
-  let markdown = preview.innerHTML;
-  editor.value = markdown;
+editor.addEventListener("input", () => {
+  let markdown = editor.value;
   preview.innerHTML = marked.parse(markdown);
 });
