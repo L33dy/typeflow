@@ -4,8 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron . --experimental-modules",
-    "build": "esbuild index.js --bundle --platform=node --outdir=dist"
+    "start": "esbuild index.js --bundle --platform=node --outdir=dist | electron .",
   },
   "author": "",
   "license": "ISC",

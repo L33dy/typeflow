@@ -2209,6 +2209,9 @@ var require_marked = __commonJS({
 var marked = require_marked();
 var editor = document.getElementById("editor");
 var preview = document.getElementById("preview");
-editor.addEventListener("input", () => {
-  preview.innerHTML = marked.parse(editor.value);
+preview.contentEditable = true;
+preview.addEventListener("input", () => {
+  let markdown = preview.innerHTML;
+  editor.value = markdown;
+  preview.innerHTML = marked.parse(markdown);
 });
