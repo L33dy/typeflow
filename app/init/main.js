@@ -1,13 +1,8 @@
-const electron = require('electron')
-
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
-const Menu = electron.Menu
-const MenuItem = electron.MenuItem
+const { app, BrowserWindow, Menu, MenuItem } = require('electron')
 
 const createWindow = () => {
     const win = new BrowserWindow({
-        width: 800,
+        width: 1200,
         height: 600,
         webPreferences: {
             frame: false
@@ -16,26 +11,27 @@ const createWindow = () => {
 
     win.loadFile('index.html')
 
-    /*const template = [
-        {
-            label: "File"
-        },
-        {
-            label: "Edit"
-        },
-        {
-            label: "View"
-        }
-    ]
+    const menu = Menu.getApplicationMenu()
+    const fileMenu = menu.items.find(item => item.label === "File")
 
-    const menu = Menu.buildFromTemplate(template)
-    Menu.setApplicationMenu(menu)*/
+    const newFileItem = new MenuItem({
+        label: "New File",
+        accelerator: "CmdOrCtrl+N"
+    })
 
-    const menu = new Menu()
+    const saveFileItem = new MenuItem({
+        label: "Save File",
+        accelerator: "CmdOrCtrl+S"
+    })
 
-    const menuItem = new MenuItem()
+    const openFileItem = new MenuItem({
+        label: "Open File",
+        accelerator: "CmdOrCtrl+O"
+    })
 
-    menu.insert(1, menuItem)
+    fileMenu.submenu.insert(0, newFileItem)
+    fileMenu.submenu.insert(1, saveFileItem)
+    fileMenu.submenu.insert(2, openFileItem)
 }
 
 app.whenReady().then(() => {
