@@ -2205,10 +2205,11 @@ var require_marked = __commonJS({
   }
 });
 
-// index.js
+// app/renderer/index.js
 var marked = require_marked();
 var editor = document.getElementById("editor");
 var preview = document.getElementById("preview");
 editor.addEventListener("input", () => {
-  preview.innerHTML = marked.parse(editor.value);
+  let markdown = editor.value;
+  preview.innerHTML = marked.parse(markdown);
 });
