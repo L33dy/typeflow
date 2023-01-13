@@ -8,4 +8,3 @@ editor.addEventListener('input', () => {
 
     preview.innerHTML = marked.parse(markdown)
 })
-

@@ -5,14 +5,14 @@
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
+    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist",
     "packtowin": "electron-packager . --platform=win32 --arch=x64"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "electron-packager": "^17.1.1",
     "esbuild": "^0.16.17",
-    "iconv-lite": "^0.6.3",
     "marked": "^4.2.5"
   },
   "devDependencies": {
