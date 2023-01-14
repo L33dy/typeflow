@@ -5,7 +5,7 @@
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist",
+    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
     "packtowin": "electron-packager . --platform=win32 --arch=x64"
   },
   "author": "",

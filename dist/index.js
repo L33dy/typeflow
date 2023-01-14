@@ -2210,6 +2210,8 @@ var marked = require_marked();
 var editor = document.getElementById("editor");
 var preview = document.getElementById("preview");
 editor.addEventListener("input", () => {
-  let markdown = editor.value;
-  preview.innerHTML = marked.parse(markdown);
+  let value = editor.value;
+  console.log(value);
+  let regexp = new RegExp(/^(#+\s)+/);
+  preview.innerHTML = marked.parse(value);
 });
