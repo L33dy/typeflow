@@ -13,6 +13,6 @@ textarea {
     resize: none;
 }
 
-textarea:focus{
+textarea:focus, div:focus {
     outline: none;
 }

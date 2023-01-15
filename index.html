@@ -2,17 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mark It</title>
+    <title>Mark It - Untitled.md</title>
     <link rel="stylesheet" href="themes/reset.css">
-    <link rel="stylesheet" href="themes/mark-it-classic.css">
+    <link rel="stylesheet" href="themes/root.css">
 </head>
 <body>
 
 <div class="container">
-    <div class="preview" id="preview"></div>
     <textarea class="editor" id="editor"></textarea>
+    <div contenteditable="true" class="preview" id="preview"></div>
 </div>
 
 <script src="dist/index.js"></script>
+<script src="app/renderer/checkModify.js"></script>
 </body>
 </html>

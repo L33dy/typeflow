@@ -10,17 +10,17 @@ body {
   gap: 1rem;
 }
 .container .editor {
-  width: 100%;
+  width: 50vw;
   z-index: 10;
-  opacity: 0;
 }
 .container .preview {
   z-index: 1;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 50vw;
+}
+.container .preview .caret {
+  width: 2px;
+  height: 1rem;
+  background-color: black;
 }
 
-/*# sourceMappingURL=mark-it-classic.css.map */
+/*# sourceMappingURL=root.css.map */

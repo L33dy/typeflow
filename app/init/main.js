@@ -19,7 +19,10 @@ const createWindow = () => {
             submenu: [
                 {
                     label: "New File",
-                    accelerator: "CmdOrCtrl+N"
+                    accelerator: "CmdOrCtrl+N",
+                    click() {
+                        FileFunctions.newFile()
+                    }
                 },
                 {
                     label: "Save File",
@@ -94,30 +97,30 @@ const createWindow = () => {
             ]
         },
         {
-          label: "Format",
-          submenu: [
-              {
-                  label: "Bold",
-                  accelerator: "CmdOrCtrl+B",
-                  click() {
-                      FormatFunctions.formatText("bold")
-                  }
-              },
-              {
-                  label: "Italic",
-                  accelerator: "CmdOrCtrl+I",
-                  click() {
-                      FormatFunctions.formatText("italic")
-                  }
-              },
-              {
-                  label: "Underline",
-                  accelerator: "CmdOrCtrl+U",
-                  click() {
-                      FormatFunctions.formatText("underline")
-                  }
-              }
-          ]
+            label: "Format",
+            submenu: [
+                {
+                    label: "Bold",
+                    accelerator: "CmdOrCtrl+B",
+                    click() {
+                        FormatFunctions.formatText("bold")
+                    }
+                },
+                {
+                    label: "Italic",
+                    accelerator: "CmdOrCtrl+I",
+                    click() {
+                        FormatFunctions.formatText("italic")
+                    }
+                },
+                {
+                    label: "Underline",
+                    accelerator: "CmdOrCtrl+U",
+                    click() {
+                        FormatFunctions.formatText("underline")
+                    }
+                }
+            ]
         },
         {
             role: 'viewMenu'
@@ -126,6 +129,8 @@ const createWindow = () => {
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
+
+    // shortcuts
 }
 
 app.whenReady().then(() => {
@@ -133,6 +138,11 @@ app.whenReady().then(() => {
 })
 
 class FileFunctions {
+    static async newFile() {
+        let win = BrowserWindow.getFocusedWindow()
+        win.reload()
+    }
+
     static async saveFile() {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
@@ -145,11 +155,15 @@ class FileFunctions {
             ]
         }).then(result => {
             // Write the contents of the div to the selected file
-            writeFile(result.filePath, editorValue, (err) => {
+            writeFile(result.filePath, editorValue, async (err) => {
                 if (err) {
                     console.log(err);
                 } else {
                     console.log('File saved');
+
+                    await focusedContents[0].executeJavaScript(`
+                    document.title = 'Mark It - ${result.filePath.replace(/^.*[\\\/]/, '')}'
+                    `);
                 }
             });
         });
@@ -173,8 +187,7 @@ class FileFunctions {
 
                     await focusedContents[0].executeJavaScript(`document.getElementById('editor').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}";`);
                     await focusedContents[0].executeJavaScript(`
-                        var inputEvent = new CustomEvent('input');
-                        document.getElementById('editor').dispatchEvent(inputEvent);
+                        preview.innerHTML = marked.parse(editor.value)
                         document.title = 'Mark It - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
                         `);
                 }
@@ -195,8 +208,20 @@ class ParagraphFunctions {
         tags += "#"
     }
     
-    var editor = document.getElementById('editor');
-    editor.value += tags + " ";
+    var editor = document.getElementById('editor')
+    var preview = document.getElementById('preview')
+    preview.innerHTML += "<h${num}><br></h${num}>"
+    
+    var range = document.createRange()
+    var sel = window.getSelection()
+
+    console.log(preview.childNodes.length)
+
+    range.setStart(preview.lastChild, 0)
+    range.collapse(true)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
     `)
     }
 }
@@ -207,17 +232,46 @@ class FormatFunctions {
         const focusedContents = allContents.filter(wc => wc.isFocused())
 
         await focusedContents[0].executeJavaScript(`
+        var preview = document.getElementById("preview")
+        
         if("${formatStyle}" == 'bold') {
-            editor.value += "****"
-            editor.setSelectionRange(editor.value.length, editor.value.length - 2)
+            preview.innerHTML += "<strong id='strong'>&nbsp;</strong>"
+            setCaretPosition(1)
+            
+            preview.addEventListener('input', () => {
+                document.getElementById("strong").innerHTML = document.getElementById("strong").innerHTML.replace(/&nbsp;/g, "")
+                setCaretPosition(1)
+            }, {once: true})
         }
         else if("${formatStyle}" == 'italic') {
-            editor.value += "**"
-            editor.setSelectionRange(editor.value.length, editor.value.length - 1)
+            preview.innerHTML += "<i id='italic'>&nbsp;</i>"
+            setCaretPosition(1)
+            
+            preview.addEventListener('input', () => {
+                document.getElementById("italic").innerHTML = document.getElementById("italic").innerHTML.replace(/&nbsp;/g, "")
+                setCaretPosition(1)
+            }, {once: true})
+            
         }
         else if("${formatStyle}" == 'underline') {
-            editor.value += '<u></u>'
-            editor.setSelectionRange(editor.value.length, editor.value.length - 4)
+            preview.innerHTML += "<u id='underline'>&nbsp;</u>"
+            setCaretPosition(1)
+            
+            preview.addEventListener('input', () => {
+                document.getElementById("underline").innerHTML = document.getElementById("underline").innerHTML.replace(/&nbsp;/g, "")
+                setCaretPosition(1)
+            }, {once: true})
+        }
+        
+        function setCaretPosition(offset) {
+            var range = document.createRange()
+            var sel = window.getSelection()
+
+            range.setStart(preview.lastChild, offset)
+            range.collapse(true)
+
+            sel.removeAllRanges()
+            sel.addRange(range)
         }
         `)
     }

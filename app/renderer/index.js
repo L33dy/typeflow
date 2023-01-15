@@ -1,20 +1,19 @@
 const marked = require('marked')
+const TurndownService = require('turndown')
+
+
+let td = new TurndownService({
+    headingStyle: 'atx',
+    emDelimiter: '*'
+})
+
+td.escape = function(text) {
+    return text;
+}
 
 let editor = document.getElementById("editor")
 let preview = document.getElementById("preview")
 
-/*
-editor.addEventListener('input', () => {
-    let markdown = editor.value
-
-    preview.innerHTML = marked.parse(markdown)
-})*/
-
-editor.addEventListener('input', () => {
-    let value = editor.value;
-    console.log(value)
-    let regexp = new RegExp(/^(#+\s)+/)
-
-    preview.innerHTML = marked.parse(value);
-});
-
+preview.addEventListener('input', () => {
+    editor.value = td.turndown(preview.innerHTML)
+})
