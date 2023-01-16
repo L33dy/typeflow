@@ -98,6 +98,16 @@ const createWindow = () => {
                     click() {
                         ParagraphFunctions.addHeading(6)
                     }
+                },
+                {
+                    type: "separator"
+                },
+                {
+                    label: "Unordered list",
+                    accelerator: "CmdOrCtrl+Shift+U",
+                    click() {
+                        ParagraphFunctions.addUnorderedList()
+                    }
                 }
             ]
         },
@@ -115,7 +125,7 @@ const createWindow = () => {
                     label: "Italic",
                     accelerator: "CmdOrCtrl+I",
                     click() {
-                       //FormatFunctions.formatText("italic")
+                        //FormatFunctions.formatText("italic")
                     }
                 },
                 {
@@ -214,6 +224,17 @@ class FileFunctions {
 }
 
 class ParagraphFunctions {
+    static async addUnorderedList() {
+        const focusedContent = webContents.getFocusedWebContents()
+        await focusedContent.executeJavaScript(`
+        sourceCode.value += "- &nbsp;"
+        
+        markIt.innerHTML = marked.parse(sourceCode.value)
+        `)
+
+
+    }
+
     static async addHeading(num) {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
@@ -317,9 +338,8 @@ class ViewFunctions {
 // Create theme folder
 const p = (electron.app || electron.remote.app).getPath('userData')
 
-if(fs.existsSync(p + "/themes")) {
+if (fs.existsSync(p + "/themes")) {
     console.log("Theme folder already present")
-}
-else {
+} else {
     fs.mkdirSync(p + "/themes", {recursive: true})
 }
