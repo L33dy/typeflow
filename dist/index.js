@@ -24097,7 +24097,8 @@ var marked = require_marked();
 var TurndownService = require_turndown_cjs();
 var td = new TurndownService({
   headingStyle: "atx",
-  emDelimiter: "*"
+  emDelimiter: "*",
+  bulletListMarker: "-"
 });
 td.escape = function(text) {
   return text;
@@ -24107,10 +24108,12 @@ var markIt = document.getElementById("mark-it");
 markIt.addEventListener("input", () => {
   sourceCode.value = td.turndown(markIt.innerHTML);
 });
+var listThere = false;
 markIt.addEventListener("keypress", (ev) => {
   if (ev.code === "Slash") {
     markIt.addEventListener("keypress", (ev2) => {
       if (ev2.code === "Space") {
+        listThere = true;
         markIt.innerHTML = marked.parse(sourceCode.value);
         setCaretPosition();
         markIt.addEventListener("keypress", () => {
@@ -24119,6 +24122,18 @@ markIt.addEventListener("keypress", (ev) => {
         }, { once: true });
       }
     }, { once: true });
+  }
+});
+markIt.addEventListener("keydown", (ev) => {
+  if (!listThere)
+    return;
+  if (ev.code === "Tab") {
+    ev.preventDefault();
+    if (sourceCode.value.slice(-1) === "-") {
+      sourceCode.value = sourceCode.value.slice(0, -1) + "    - <br>";
+      markIt.innerHTML = marked.parse(sourceCode.value);
+      setCaretPosition();
+    }
   }
 });
 function setCaretPosition(offset = 0) {

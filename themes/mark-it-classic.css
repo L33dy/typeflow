@@ -11,6 +11,8 @@ body {
 }
 
 /* Paragraph */
+
+/* Headings */
 h1 {
     position: relative;
 
@@ -93,4 +95,22 @@ h5::before {
 
 h6 {
     font-size: 0.85em;
+}
+
+/* Lists */
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: disc;
+}
+
+li ul {
+    margin-left: 1em;
+}
+
+li ul li {
+    list-style: circle;
 }
