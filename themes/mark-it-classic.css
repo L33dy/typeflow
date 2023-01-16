@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Colors */
+:root {
+    --primary: #637aff;
+    --grey: #5b5b5b;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Paragraph */
+h1 {
+    text-align: center;
+    margin: 0 auto 1rem auto;
+
+    border-bottom: 2px dashed;
+    border-bottom-color: var(--primary);
+
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+h2 {
+    border-left: 6px solid;
+    border-left-color: var(--primary);
+    padding-left: 6px;
+
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 1.45rem;
+    font-weight: 500;
+}
+
+h3::before {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    vertical-align: middle;
+    content: '';
+    background-color: var(--primary);
+    border-radius: 50%;
+
+    margin-right: 6px;
+}
+
+h4 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+h4::before {
+    display: inline-block;
+    width: 10px;
+    height: 2px;
+    vertical-align: middle;
+    content: '';
+    background-color: var(--primary);
+
+    margin-right: 4px;
+}
+
+h5 {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+h5::before {
+    display: inline-block;
+    width: 8px;
+    height: 1px;
+    vertical-align: middle;
+    content: '';
+    background-color: var(--grey);
+
+    margin-right: 6px;
+}
+
+h6 {
+    font-size: 0.85rem;
+}

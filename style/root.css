@@ -1,0 +1,29 @@
+body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  gap: 1rem;
+  display: flex;
+}
+.container .source-code-view {
+  display: none;
+}
+.container .mark-it-view {
+  display: block;
+}
+.container .editor {
+  width: 90%;
+  height: 100%;
+  margin: 1rem auto 0 auto;
+}
+.container .editor .caret {
+  width: 2px;
+  height: 1rem;
+  background-color: black;
+}
+
+/*# sourceMappingURL=root.css.map */

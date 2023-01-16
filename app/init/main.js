@@ -1,5 +1,7 @@
 const {app, BrowserWindow, Menu, MenuItem, globalShortcut, webContents, dialog} = require('electron')
 const {writeFile, readFile} = require('fs')
+const electron = require('electron')
+const fs = require('fs')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -37,6 +39,9 @@ const createWindow = () => {
                     click() {
                         FileFunctions.openFile()
                     }
+                },
+                {
+                    type: 'separator'
                 },
                 {
                     label: "Quit",
@@ -123,7 +128,19 @@ const createWindow = () => {
             ]
         },
         {
-            role: 'viewMenu'
+            label: "View",
+            submenu: [
+                {
+                    label: "Toggle Source Code Mode",
+                    accelerator: "CmdOrCtrl+K",
+                    click() {
+                        ViewFunctions.toggleSourceMode()
+                    }
+                },
+                {
+                    role: 'toggleDevTools'
+                }
+            ]
         }
     ]
 
@@ -233,6 +250,7 @@ class FormatFunctions {
 
         await focusedContents[0].executeJavaScript(`
         var preview = document.getElementById("preview")
+        var editor = document.getElementById("editor")
         
         if("${formatStyle}" == 'bold') {
             preview.innerHTML += "<strong id='strong'>&nbsp;</strong>"
@@ -275,4 +293,34 @@ class FormatFunctions {
         }
         `)
     }
+}
+
+class ViewFunctions {
+    static toggleSourceMode() {
+        const focusedContent = webContents.getFocusedWebContents()
+
+        focusedContent.executeJavaScript(`
+        var editor = document.getElementById("editor")
+        var preview = document.getElementById("preview")
+        
+        if(editor.style.display === "none") {
+            editor.style.display = "block"
+            preview.style.display = "none"
+        }
+        else {
+            editor.style.display = "none"
+            preview.style.display = "block"
+        }
+        `)
+    }
+}
+
+// Create theme folder
+const p = (electron.app || electron.remote.app).getPath('userData')
+
+if(fs.existsSync(p + "/themes")) {
+    console.log("Theme folder already present")
+}
+else {
+    fs.mkdirSync(p + "/themes", {recursive: true})
 }

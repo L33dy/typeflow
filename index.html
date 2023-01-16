@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Mark It - Untitled.md</title>
-    <link rel="stylesheet" href="themes/reset.css">
-    <link rel="stylesheet" href="themes/root.css">
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/root.css">
+    <link rel="stylesheet" href="themes/mark-it-classic.css">
 </head>
 <body>
 
-<div class="container">
-    <textarea class="editor" id="editor"></textarea>
-    <div contenteditable="true" class="preview" id="preview"></div>
+<div id="root" class="container">
+    <textarea class="source-code-view editor" id="editor" style="display: none;"></textarea>
+    <div spellcheck="false" contenteditable="true" class="mark-it-view editor" id="preview">
+    </div>
 </div>
 
 <script src="dist/index.js"></script>
