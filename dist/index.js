@@ -23524,14 +23524,6 @@ var require_turndown_cjs = __commonJS({
         }
       }
     };
-    rules.underline = {
-      filter: "u",
-      replacement: function(content, node, options) {
-        if (!content.trim())
-          return "";
-        return "<u>" + content + "</u>";
-      }
-    };
     rules.listItem = {
       filter: "li",
       replacement: function(content, node, options) {
@@ -24110,11 +24102,34 @@ var td = new TurndownService({
 td.escape = function(text) {
   return text;
 };
-var editor = document.getElementById("editor");
-var preview = document.getElementById("preview");
-preview.addEventListener("input", () => {
-  editor.value = td.turndown(preview.innerHTML);
+var sourceCode = document.getElementById("source-code");
+var markIt = document.getElementById("mark-it");
+markIt.addEventListener("input", () => {
+  sourceCode.value = td.turndown(markIt.innerHTML);
 });
+markIt.addEventListener("keypress", (ev) => {
+  if (ev.code === "Slash") {
+    markIt.addEventListener("keypress", (ev2) => {
+      if (ev2.code === "Space") {
+        markIt.innerHTML = marked.parse(sourceCode.value);
+        setCaretPosition();
+        markIt.addEventListener("keypress", () => {
+          markIt.innerHTML = markIt.innerHTML.replace(/&nbsp;/g, "");
+          setCaretPosition();
+        }, { once: true });
+      }
+    }, { once: true });
+  }
+});
+function setCaretPosition(offset = 0) {
+  var range = document.createRange();
+  var sel = window.getSelection();
+  console.log(markIt.childNodes.length);
+  range.setStart(markIt.lastChild, offset);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
 /*! Bundled license information:
 
 domino/lib/cssparser.js:

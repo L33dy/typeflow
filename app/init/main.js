@@ -108,21 +108,21 @@ const createWindow = () => {
                     label: "Bold",
                     accelerator: "CmdOrCtrl+B",
                     click() {
-                        FormatFunctions.formatText("bold")
+                        //FormatFunctions.formatText("bold")
                     }
                 },
                 {
                     label: "Italic",
                     accelerator: "CmdOrCtrl+I",
                     click() {
-                        FormatFunctions.formatText("italic")
+                       //FormatFunctions.formatText("italic")
                     }
                 },
                 {
                     label: "Underline",
                     accelerator: "CmdOrCtrl+U",
                     click() {
-                        FormatFunctions.formatText("underline")
+                        //FormatFunctions.formatText("underline")
                     }
                 }
             ]
@@ -164,7 +164,7 @@ class FileFunctions {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
 
-        const editorValue = await focusedContents[0].executeJavaScript("document.getElementById('editor').value")
+        const editorValue = await focusedContents[0].executeJavaScript("document.getElementById('source-code').value")
 
         dialog.showSaveDialog({
             filters: [
@@ -202,9 +202,9 @@ class FileFunctions {
                     const allContents = webContents.getAllWebContents()
                     const focusedContents = allContents.filter(wc => wc.isFocused())
 
-                    await focusedContents[0].executeJavaScript(`document.getElementById('editor').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}";`);
+                    await focusedContents[0].executeJavaScript(`document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}";`);
                     await focusedContents[0].executeJavaScript(`
-                        preview.innerHTML = marked.parse(editor.value)
+                        markIt.innerHTML = marked.parse(sourceCode.value)
                         document.title = 'Mark It - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
                         `);
                 }
@@ -225,16 +225,15 @@ class ParagraphFunctions {
         tags += "#"
     }
     
-    var editor = document.getElementById('editor')
-    var preview = document.getElementById('preview')
-    preview.innerHTML += "<h${num}><br></h${num}>"
+    var markIt = document.getElementById('mark-it')
+    markIt.innerHTML += "<h${num}><br></h${num}>"
     
     var range = document.createRange()
     var sel = window.getSelection()
 
-    console.log(preview.childNodes.length)
+    console.log(markIt.childNodes.length)
 
-    range.setStart(preview.lastChild, 0)
+    range.setStart(markIt.lastChild, 0)
     range.collapse(true)
 
     sel.removeAllRanges()
@@ -300,16 +299,16 @@ class ViewFunctions {
         const focusedContent = webContents.getFocusedWebContents()
 
         focusedContent.executeJavaScript(`
-        var editor = document.getElementById("editor")
-        var preview = document.getElementById("preview")
+        var sourceCode = document.getElementById("source-code")
+        var markIt = document.getElementById("mark-it")
         
-        if(editor.style.display === "none") {
-            editor.style.display = "block"
-            preview.style.display = "none"
+        if(sourceCode.style.display === "none") {
+            sourceCode.style.display = "block"
+            markIt.style.display = "none"
         }
         else {
-            editor.style.display = "none"
-            preview.style.display = "block"
+            sourceCode.style.display = "none"
+            markIt.style.display = "block"
         }
         `)
     }

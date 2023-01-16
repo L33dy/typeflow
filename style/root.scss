@@ -1,6 +1,7 @@
 body {
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .container {
@@ -10,14 +11,6 @@ body {
   gap: 1rem;
 
   display: flex;
-
-  .source-code-view {
-    display: none;
-  }
-
-  .mark-it-view {
-    display: block;
-  }
 
   .editor {
     width: 90%;
@@ -30,5 +23,11 @@ body {
 
       background-color: black;
     }
+  }
+
+  .source-code-view {
+    background-color: #e8e8e8;
+
+    border: none;
   }
 }
