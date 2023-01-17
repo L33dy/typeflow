@@ -1,5 +1,4 @@
 var editor = document.getElementById("mark-it")
-var sourceCodeViewer = document.getElementById("source-code")
 
 let previousKey = ""
 editor.addEventListener('keydown', (e) => {
@@ -51,6 +50,9 @@ editor.addEventListener('keydown', (e) => {
             editor.appendChild(div)
 
             setCaretPosition()
+
+            // Update source code
+            editor.dispatchEvent(new Event('input'))
 
             return
         }
