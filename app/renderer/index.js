@@ -19,7 +19,9 @@ var listThere = false;
 markIt.addEventListener('input', () => {
     sourceCode.value = td.turndown(markIt.innerHTML)
 
-   /* if (sourceCode.value.slice(-1) === "-") {
+    /*console.log(sourceCode.value.slice(-1))
+
+    if (sourceCode.value.slice(-1) === "-") {
         markIt.addEventListener('keydown', (ev) => {
             if (ev.code === "Space") {
                 markIt.innerHTML = marked.parse(sourceCode.value)
@@ -32,6 +34,14 @@ markIt.addEventListener('input', () => {
                 setCaretPosition()
                 listThere = true
                 console.log("tab")
+            }
+        })
+    }
+
+    if(sourceCode.value.slice(-1) === "    -") {
+        markIt.addEventListener('keydown', (e) => {
+            if(e.code === "Enter") {
+                console.log("down")
             }
         })
     }*/

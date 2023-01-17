@@ -98,19 +98,36 @@ h6 {
 }
 
 /* Lists */
+
+
+/* First */
 ul {
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 1.25rem;
 }
 
-li {
-    list-style: disc;
+/* Nested */
+ul li ul {
+    padding-left: 0.22em;
 }
 
 li ul {
     margin-left: 1em;
 }
 
+/* Markers */
+li {
+    list-style: disc;
+}
+
 li ul li {
     list-style: circle;
+}
+
+li ul li ul li {
+    list-style: square;
+}
+
+li ul li ul li ul li {
+    list-style: "-  ";
 }
