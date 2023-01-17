@@ -6,8 +6,29 @@
     --grey: #5b5b5b;
 }
 
+/* Main */
 body {
     font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p, ol, ul {
+    margin: 0 0 1em;
+    padding: 0;
+    font-weight: normal;
+    width: fit-content;
+}
+
+li {
+    list-style-position: inside;
+}
+
+textarea {
+    resize: none;
+    outline: none;
+}
+
+textarea:focus, div:focus {
+    outline: none;
 }
 
 /* Paragraph */
@@ -98,7 +119,6 @@ h6 {
 }
 
 /* Lists */
-
 
 /* First */
 ul {

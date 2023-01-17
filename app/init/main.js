@@ -9,7 +9,8 @@ const createWindow = () => {
         height: 600,
         webPreferences: {
             frame: false
-        }
+        },
+        icon: './icon.png'
     })
 
     win.loadFile('index.html')
@@ -228,6 +229,11 @@ class ParagraphFunctions {
     static async addUnorderedList() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`
+        var currentNode = document.getSelection().anchorNode
+        if(currentNode.parentNode.parentNode.nodeName !== "BODY") {
+            currentNode.remove()
+        }
+        
         var ul = document.createElement("ul");
         editor.appendChild(ul);
         var li = document.createElement("li")
@@ -256,6 +262,12 @@ class ParagraphFunctions {
     }
     
     var markIt = document.getElementById('mark-it')
+    var currentNode = document.getSelection().anchorNode
+    
+    if(currentNode.parentNode.parentNode.nodeName !== "BODY") {
+        currentNode.remove()
+    }
+    
     markIt.innerHTML += "<h${num}><br></h${num}>"
     
     var range = document.createRange()
@@ -351,4 +363,5 @@ if (fs.existsSync(p + "/themes")) {
     console.log("Theme folder already present")
 } else {
     fs.mkdirSync(p + "/themes", {recursive: true})
+    console.log("Created themes folder")
 }
