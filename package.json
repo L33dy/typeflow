@@ -1,12 +1,12 @@
 {
-  "name": "mark-it",
-  "version": "1.0.0",
+  "name": "Mark It",
+  "version": "0.0.1",
   "description": "",
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
     "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
-    "packtowin": "electron-packager . --platform=win32 --arch=x64"
+    "packtowin": "electron-packager . --platform=win32 --arch=x64 --overwrite"
   },
   "author": "",
   "license": "ISC",
