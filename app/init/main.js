@@ -148,6 +148,9 @@ const createWindow = () => {
                     }
                 },
                 {
+                    type: "separator"
+                },
+                {
                     role: 'toggleDevTools'
                 }
             ]
@@ -156,8 +159,6 @@ const createWindow = () => {
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
-
-    // shortcuts
 }
 
 app.whenReady().then(() => {
@@ -227,10 +228,17 @@ class ParagraphFunctions {
     static async addUnorderedList() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`
-        sourceCode.value += "- <br>"
-        listThere = true
-        
-        markIt.innerHTML = marked.parse(sourceCode.value)
+        var ul = document.createElement("ul");
+        editor.appendChild(ul);
+        var li = document.createElement("li")
+        ul.appendChild(li)
+
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.setStart(ul.firstChild, 0);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
         `)
 
 

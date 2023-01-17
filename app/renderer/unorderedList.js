@@ -5,11 +5,10 @@ let previousKey = ""
 editor.addEventListener('keydown', (e) => {
     let currentNode = document.getSelection().anchorNode
 
-    if(previousKey === "Slash" && e.code === "Space") {
+    if(currentNode.textContent === "-" && e.code === "Space") {
         e.preventDefault()
 
-        let text = editor.innerText;
-        editor.innerText = text.substring(0, text.length - 1);
+        currentNode.remove()
 
         let ul = document.createElement("ul");
         editor.appendChild(ul);
@@ -44,6 +43,18 @@ editor.addEventListener('keydown', (e) => {
     if(e.code === "Enter" && currentNode.nodeName === "LI" || e.code === "NumpadEnter" && currentNode.nodeName === "LI") {
         e.preventDefault()
 
+        if(!currentNode.previousElementSibling || currentNode.previousElementSibling.parentNode.parentNode.parentNode.nodeName === "DIV") {
+            currentNode.remove()
+
+            let div = document.createElement("div")
+            div.appendChild(document.createElement("br"))
+            editor.appendChild(div)
+
+            setCaretPosition()
+
+            return
+        }
+
         handleEnter(currentNode.previousElementSibling.parentNode.parentNode.parentNode, currentNode)
     }
 
@@ -64,4 +75,15 @@ function handleEnter(node, currNode) {
     sel.addRange(range);
 
     currNode.remove()
+}
+
+function setCaretPosition(offset = 0) {
+    var range = document.createRange()
+    var sel = window.getSelection()
+
+    range.setStart(markIt.lastChild, offset)
+    range.collapse(true)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
 }

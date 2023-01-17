@@ -2,7 +2,8 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 90vh;
+  width: 100vw;
 }
 
 ul li {
@@ -14,21 +15,15 @@ ul li {
 }
 
 .container {
-  width: 100vw;
+  width: 75%;
   height: 100%;
-  box-sizing: border-box;
+  margin: 2rem auto;
   gap: 1rem;
   display: flex;
 }
 .container .editor {
-  width: 90%;
+  width: 100%;
   height: 100%;
-  margin: 1rem auto 0 auto;
-}
-.container .editor .caret {
-  width: 2px;
-  height: 1rem;
-  background-color: black;
 }
 .container .source-code-view {
   background-color: #e8e8e8;
