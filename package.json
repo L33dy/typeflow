@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
-    "packtowin": "electron-packager . --platform=win32 --arch=x64"
+    "packtowin": "electron-packager . --platform=win32 --arch=x64",
+    "build_unordered": "esbuild app/renderer/unorderedList.js --bundle --platform=node --outdir=dist | electron ."
   },
   "author": "",
   "license": "ISC",
