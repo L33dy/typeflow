@@ -227,7 +227,8 @@ class ParagraphFunctions {
     static async addUnorderedList() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`
-        sourceCode.value += "- &nbsp;"
+        sourceCode.value += "- <br>"
+        listThere = true
         
         markIt.innerHTML = marked.parse(sourceCode.value)
         `)

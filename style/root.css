@@ -1,12 +1,22 @@
 body {
-  height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+ul li {
+  list-style: disc;
+}
+
+.nested-li {
+  list-style: none;
 }
 
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  box-sizing: border-box;
   gap: 1rem;
   display: flex;
 }
