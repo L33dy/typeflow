@@ -5,7 +5,7 @@ It uses modern web technologies such as HTML, JS or Node.JS and made with Electr
 
 ## Features
 
-**NOTE:** The project is in **beta** phase so a lot of features will be added in the future.
+**NOTE:** The project is in **beta** so a lot of features will be added in the future.
 
 -   Live preview of the text while you type
 -   Modern and minimalistic style
@@ -13,5 +13,4 @@ It uses modern web technologies such as HTML, JS or Node.JS and made with Electr
 -   And more features to come:)
 
 ## Documentation
-
-Installation and usage
+[Installation](https://github.com/L33dy/mark-it/blob/master/docs/installation.md)
