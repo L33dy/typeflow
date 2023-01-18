@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@300&display=swap');
+
 body {
   overflow-x: hidden;
   margin: 0;
@@ -23,6 +25,7 @@ ul li {
   gap: 1rem;
 
   display: flex;
+  flex-direction: column;
 
   .editor {
     width: 100%;
@@ -34,4 +37,19 @@ ul li {
 
     border: none;
   }
+}
+
+.bottom-panel {
+  position: fixed;
+  bottom: 0;
+
+  width: 95%;
+  margin: 0 auto 10px auto;
+
+  text-align: right;
+
+  font-family: 'Sofia Sans', sans-serif;
+  font-size: 1rem;
+
+  cursor: default;
 }

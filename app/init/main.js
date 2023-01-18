@@ -214,8 +214,8 @@ class FileFunctions {
                     const allContents = webContents.getAllWebContents()
                     const focusedContents = allContents.filter(wc => wc.isFocused())
 
-                    await focusedContents[0].executeJavaScript(`document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}";`);
                     await focusedContents[0].executeJavaScript(`
+                        document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}"
                         markIt.innerHTML = marked.parse(sourceCode.value)
                         document.title = 'Mark It - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
                         `);

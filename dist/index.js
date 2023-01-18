@@ -24114,11 +24114,7 @@ td.escape = function(text) {
 var sourceCode = document.getElementById("source-code");
 var markIt = document.getElementById("mark-it");
 markIt.addEventListener("input", () => {
-  sourceCode.value = td.turndown(markIt.innerHTML);
-});
-markIt.addEventListener("keypress", (ev) => {
-});
-markIt.addEventListener("keydown", (ev) => {
+  sourceCode.value = td.turndown(markIt.innerHTML).replace(/"/g, "&quot;");
 });
 /*! Bundled license information:
 
