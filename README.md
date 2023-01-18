@@ -1,7 +1,7 @@
 # Mark It
 
 **Mark It** is a markdown editor with live preview directly in the editor.  
-It uses modern web technologies such as HTML, JS or Node.JS and made with Electron.js library.
+It is made with modern web technologies such as HTML, JS or Node.JS.
 
 ## Features
 
