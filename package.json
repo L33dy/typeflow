@@ -1,12 +1,13 @@
 {
-  "name": "Mark It",
+  "name": "MarkIt",
   "version": "0.0.1",
   "description": "",
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
     "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
-    "packtowin": "electron-packager . Mark/'It --platform=win32 --arch=x64 --overwrite"
+    "packtowin": "electron-packager . MarkIt --platform=win32 --arch=x64 --overwrite",
+    "createWinInstaller": "app/winstaller.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "turndown": "^7.1.1"
   },
   "devDependencies": {
-    "electron": "^22.0.1"
+    "electron": "^22.0.1",
+    "electron-winstaller": "^5.1.0"
   }
 }
