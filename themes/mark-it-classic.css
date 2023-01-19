@@ -50,10 +50,10 @@ h1::before {
     border-bottom-color: var(--primary);
     content: '';
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(4px);
     bottom: 0;
     position: absolute;
-    width: 150px;
+    width: 75px;
 }
 
 h2 {
