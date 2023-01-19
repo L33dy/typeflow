@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
-    "packtowin": "electron-packager . --platform=win32 --arch=x64 --overwrite"
+    "packtowin": "electron-packager . Mark/'It --platform=win32 --arch=x64 --overwrite"
   },
   "author": "",
   "license": "ISC",

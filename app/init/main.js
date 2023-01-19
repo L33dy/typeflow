@@ -218,6 +218,8 @@ class FileFunctions {
                         document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}"
                         markIt.innerHTML = marked.parse(sourceCode.value)
                         document.title = 'Mark It - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
+                        
+                        markIt.dispatchEvent(new Event('input'))
                         `);
                 }
             });
