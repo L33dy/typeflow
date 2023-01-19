@@ -1,7 +1,7 @@
 # Mark It
 
 **Mark It** is a markdown editor with live preview directly in the editor.  
-It is made with modern web technologies such as HTML, JS or Node.JS.
+It is made with modern web technologies such as HTML5, JS or Node.JS.
 
 ## Features
 
@@ -14,3 +14,6 @@ It is made with modern web technologies such as HTML, JS or Node.JS.
 
 ## Documentation
 [Installation](https://github.com/L33dy/mark-it/blob/master/docs/installation.md)
+
+## Buy me a coffee!
+You can [buy me](https://buymeacoffee.com/l33dy) a coffee if you liked Mark It!
