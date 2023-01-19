@@ -25,7 +25,7 @@ const createWindow = () => {
                     accelerator: "CmdOrCtrl+N",
                     click() {
                         FileFunctions.newFile()
-                    }
+                    },
                 },
                 {
                     label: "Save File",
@@ -118,22 +118,34 @@ const createWindow = () => {
                 {
                     label: "Bold",
                     accelerator: "CmdOrCtrl+B",
-                    click() {
-                        //FormatFunctions.formatText("bold")
+                    async click() {
+                        let focusedContent = webContents.getFocusedWebContents()
+                        await focusedContent.executeJavaScript(`
+                            var editor = document.getElementById("mark-it")
+                            document.execCommand('bold')
+                        `)
                     }
                 },
                 {
                     label: "Italic",
                     accelerator: "CmdOrCtrl+I",
-                    click() {
-                        //FormatFunctions.formatText("italic")
+                    async click() {
+                        let focusedContent = webContents.getFocusedWebContents()
+                        await focusedContent.executeJavaScript(`
+                            var editor = document.getElementById("mark-it")
+                            document.execCommand('italic')
+                        `)
                     }
                 },
                 {
                     label: "Underline",
                     accelerator: "CmdOrCtrl+U",
-                    click() {
-                        //FormatFunctions.formatText("underline")
+                    async click() {
+                        let focusedContent = webContents.getFocusedWebContents()
+                        await focusedContent.executeJavaScript(`
+                            var editor = document.getElementById("mark-it")
+                            document.execCommand('underline')
+                        `)
                     }
                 }
             ]
@@ -285,59 +297,6 @@ class ParagraphFunctions {
     `)
     }
 }
-
-class FormatFunctions {
-    static async formatText(formatStyle) {
-        const allContents = webContents.getAllWebContents()
-        const focusedContents = allContents.filter(wc => wc.isFocused())
-
-        await focusedContents[0].executeJavaScript(`
-        var preview = document.getElementById("preview")
-        var editor = document.getElementById("editor")
-        
-        if("${formatStyle}" == 'bold') {
-            preview.innerHTML += "<strong id='strong'>&nbsp;</strong>"
-            setCaretPosition(1)
-            
-            preview.addEventListener('input', () => {
-                document.getElementById("strong").innerHTML = document.getElementById("strong").innerHTML.replace(/&nbsp;/g, "")
-                setCaretPosition(1)
-            }, {once: true})
-        }
-        else if("${formatStyle}" == 'italic') {
-            preview.innerHTML += "<i id='italic'>&nbsp;</i>"
-            setCaretPosition(1)
-            
-            preview.addEventListener('input', () => {
-                document.getElementById("italic").innerHTML = document.getElementById("italic").innerHTML.replace(/&nbsp;/g, "")
-                setCaretPosition(1)
-            }, {once: true})
-            
-        }
-        else if("${formatStyle}" == 'underline') {
-            preview.innerHTML += "<u id='underline'>&nbsp;</u>"
-            setCaretPosition(1)
-            
-            preview.addEventListener('input', () => {
-                document.getElementById("underline").innerHTML = document.getElementById("underline").innerHTML.replace(/&nbsp;/g, "")
-                setCaretPosition(1)
-            }, {once: true})
-        }
-        
-        function setCaretPosition(offset) {
-            var range = document.createRange()
-            var sel = window.getSelection()
-
-            range.setStart(preview.lastChild, offset)
-            range.collapse(true)
-
-            sel.removeAllRanges()
-            sel.addRange(range)
-        }
-        `)
-    }
-}
-
 class ViewFunctions {
     static toggleSourceMode() {
         const focusedContent = webContents.getFocusedWebContents()
