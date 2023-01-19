@@ -266,7 +266,7 @@ class ParagraphFunctions {
     var markIt = document.getElementById('mark-it')
     var currentNode = document.getSelection().anchorNode
     
-    if(currentNode.parentNode.parentNode.nodeName !== "BODY") {
+    if(currentNode.parentNode.nodeName !== "BODY") {
         currentNode.remove()
     }
     
