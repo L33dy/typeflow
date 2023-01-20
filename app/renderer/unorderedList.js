@@ -1,4 +1,4 @@
-var editor = document.getElementById("mark-it")
+var editor = document.getElementById("editor")
 
 let previousKey = ""
 editor.addEventListener('keydown', (e) => {
@@ -8,6 +8,7 @@ editor.addEventListener('keydown', (e) => {
         e.preventDefault()
 
         currentNode.remove()
+        Editor.removeBR()
 
         let ul = document.createElement("ul");
         editor.appendChild(ul);
@@ -43,27 +44,36 @@ editor.addEventListener('keydown', (e) => {
         e.preventDefault()
 
         if (!currentNode.previousElementSibling || currentNode.parentNode.parentNode.nodeName === "DIV") {
+            // remove the UL
             currentNode.remove()
 
             let div = document.createElement("div")
             div.appendChild(document.createElement("br"))
+
+            currentNode = window.getSelection().anchorNode
+
+            // Check if there's empty list
+            if(currentNode.nodeName === "UL" && currentNode.innerHTML === "") {
+                currentNode.remove()
+            }
+
             editor.appendChild(div)
 
             setCaretPosition()
 
             // Update source code
-            editor.dispatchEvent(new Event('input'))
+            Editor.triggerInput()
 
             return
         }
 
-        handleEnter(currentNode.previousElementSibling.parentNode.parentNode.parentNode, currentNode)
+        denestList(currentNode.previousElementSibling.parentNode.parentNode.parentNode, currentNode)
     }
 
     previousKey = e.code;
 })
 
-function handleEnter(node, currNode) {
+function denestList(node, currNode) {
     let startingNode = node;
 
     let li = document.createElement("li")

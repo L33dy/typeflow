@@ -1,12 +1,12 @@
 {
   "name": "Typeflow",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "icon": "icon.ico",
   "description": "Markdown editor with inline live preview.",
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist/scripts | electron .",
+    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=app/esbuild | electron .",
     "packtowin": "electron-packager . Typeflow --platform=win32 --arch=x64 --overwrite --out dist/ --icon icons/icon.ico --prune=true ",
     "setup": "electron-installer-windows --src dist/Typeflow-win32-x64 --dest dist/installers/"
   },

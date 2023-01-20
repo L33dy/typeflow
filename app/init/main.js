@@ -10,7 +10,7 @@ const createWindow = () => {
         webPreferences: {
             frame: false
         },
-        icon: './icons/notepad-notebook-svgrepo-com.ico'
+        icon: './icons/icon.ico'
     })
 
     win.loadFile('index.html')
@@ -131,7 +131,7 @@ const createWindow = () => {
                     async click() {
                         let focusedContent = webContents.getFocusedWebContents()
                         await focusedContent.executeJavaScript(`
-                            var editor = document.getElementById("mark-it")
+                            var editor = document.getElementById("editor")
                             document.execCommand('bold')
                         `)
                     }
@@ -142,7 +142,7 @@ const createWindow = () => {
                     async click() {
                         let focusedContent = webContents.getFocusedWebContents()
                         await focusedContent.executeJavaScript(`
-                            var editor = document.getElementById("mark-it")
+                            var editor = document.getElementById("editor")
                             document.execCommand('italic')
                         `)
                     }
@@ -153,7 +153,7 @@ const createWindow = () => {
                     async click() {
                         let focusedContent = webContents.getFocusedWebContents()
                         await focusedContent.executeJavaScript(`
-                            var editor = document.getElementById("mark-it")
+                            var editor = document.getElementById("editor")
                             document.execCommand('underline')
                         `)
                     }
@@ -213,7 +213,7 @@ class FileFunctions {
                     console.log('File saved');
 
                     await focusedContents[0].executeJavaScript(`
-                    document.title = 'Mark It - ${result.filePath.replace(/^.*[\\\/]/, '')}'
+                    document.title = 'Typeflow - ${result.filePath.replace(/^.*[\\\/]/, '')}'
                     `);
                 }
             });
@@ -239,9 +239,9 @@ class FileFunctions {
                     await focusedContents[0].executeJavaScript(`
                         document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}"
                         markIt.innerHTML = marked.parse(sourceCode.value)
-                        document.title = 'Mark It - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
+                        document.title = 'Typeflow - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
                         
-                        markIt.dispatchEvent(new Event('input'))
+                        Editor.triggerInput()
                         `);
                 }
             });
@@ -257,9 +257,17 @@ class ParagraphFunctions {
         
         var hr = document.createElement("hr")
         var br = document.createElement("br")
+        
+        Editor.removeBR()
+        
         currentNode.appendChild(hr)
-        hr.previousElementSibling.remove()
         currentNode.appendChild(br)
+        
+        /*if(currentNode.parentNode.nodeName !== "BODY") {
+            hr.previousElementSibling.remove()
+        }*/
+        
+        
         
         var range = document.createRange();
         var sel = window.getSelection();
@@ -267,7 +275,8 @@ class ParagraphFunctions {
         range.collapse(true);
         sel.removeAllRanges();
         sel.addRange(range);
-       
+        
+        Editor.triggerInput()
         ;0
         `)
     }
@@ -307,21 +316,20 @@ class ParagraphFunctions {
         tags += "#"
     }
     
-    var markIt = document.getElementById('mark-it')
+    var markIt = document.getElementById('editor')
     var currentNode = document.getSelection().anchorNode
     
-    if(currentNode.parentNode.nodeName !== "BODY") {
-        currentNode.remove()
-    }
+    var heading = document.createElement("h${num}")
+    heading.innerHTML += "<br>"
     
-    markIt.innerHTML += "<h${num}><br></h${num}>"
+    Editor.removeBR()
+    
+    currentNode.appendChild(heading)
     
     var range = document.createRange()
     var sel = window.getSelection()
 
-    console.log(markIt.childNodes.length)
-
-    range.setStart(markIt.lastChild, 0)
+    range.setStart(heading, 0)
     range.collapse(true)
 
     sel.removeAllRanges()
@@ -335,7 +343,7 @@ class ViewFunctions {
 
         focusedContent.executeJavaScript(`
         var sourceCode = document.getElementById("source-code")
-        var markIt = document.getElementById("mark-it")
+        var markIt = document.getElementById("editor")
         
         if(sourceCode.style.display === "none") {
             sourceCode.style.display = "block"

@@ -1,4 +1,4 @@
-var editor = document.getElementById("mark-it")
+var editor = document.getElementById("editor")
 let counter = document.getElementById("counter")
 
 editor.addEventListener('input', () => {

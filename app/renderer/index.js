@@ -13,9 +13,8 @@ td.escape = function (text) {
 }
 
 let sourceCode = document.getElementById("source-code")
-let markIt = document.getElementById("mark-it")
-var listThere = false;
+let editor = document.getElementById("editor")
 
-markIt.addEventListener('input', () => {
-    sourceCode.value = td.turndown(markIt.innerHTML).replace(/"/g, '&quot;')
+editor.addEventListener('input', () => {
+    sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, '&quot;')
 })

@@ -23524,14 +23524,6 @@ var require_turndown_cjs = __commonJS({
         }
       }
     };
-    rules.underline = {
-      filter: "u",
-      replacement: function(content, node, options) {
-        if (!content.trim())
-          return "";
-        return "<u>" + content + "</u>";
-      }
-    };
     rules.listItem = {
       filter: "li",
       replacement: function(content, node, options) {
@@ -24112,7 +24104,7 @@ td.escape = function(text) {
   return text;
 };
 var sourceCode = document.getElementById("source-code");
-var markIt = document.getElementById("mark-it");
+var markIt = document.getElementById("editor");
 markIt.addEventListener("input", () => {
   sourceCode.value = td.turndown(markIt.innerHTML).replace(/"/g, "&quot;");
 });
