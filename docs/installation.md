@@ -1,7 +1,7 @@
 # Installation
 
-You can install Mark It currently on Windows only.
+Typeflow is currently available for Windows only.
 
 ### Windows
 
-Download the windows installer from the [Releases page](https://github.com/L33dy/mark-it/releases) and install Mark It.
+Download the windows installer from the [Releases page](https://github.com/L33dy/typeflow/releases) and run it to install Typeflow.
