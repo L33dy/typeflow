@@ -1,7 +1,8 @@
-const {app, BrowserWindow, Menu, MenuItem, globalShortcut, webContents, dialog} = require('electron')
+const {app, BrowserWindow, Menu, MenuItem, globalShortcut, webContents, dialog, ipcRenderer} = require('electron')
 const {writeFile, readFile} = require('fs')
 const electron = require('electron')
 const fs = require('fs')
+const path = require("path");
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -159,6 +160,9 @@ const createWindow = () => {
                     }
                 }
             ]
+        },
+        {
+          label: "Themes"
         },
         {
             label: "View",
@@ -358,11 +362,42 @@ class ViewFunctions {
 }
 
 // Create theme folder
-const p = (electron.app || electron.remote.app).getPath('userData')
+const p = (electron.app || electron.remote.app).getPath('userData') + "/themes"
+function createThemes() {
+    console.log("Creating basic themes...")
 
-if (fs.existsSync(p + "/themes")) {
-    console.log("Theme folder already present")
-} else {
-    fs.mkdirSync(p + "/themes", {recursive: true})
-    console.log("Created themes folder")
+    const existingThemePath = "./themes/typeflow-classic.css"
+    const cssName = "typeflow-classic.css"
+
+    const cssContent = fs.readFileSync(existingThemePath, 'utf-8')
+
+    fs.writeFileSync(path.join(p, cssName), cssContent)
 }
+
+async function loadThemes() {
+    const files = fs.readdirSync(p);
+
+// Filter out any directories and store the names of all files in a new array
+    const fileNames = files.filter((file) => {
+        return fs.lstatSync(path.join(p, file)).isFile();
+    });
+
+    var focusedContent = webContents.getFocusedWebContents()
+    await focusedContent.executeJavaScript(`
+        var stylesheet = document.getElementById("stylesheet")
+        stylesheet.href = ${p} + "/${fileNames[0]}"
+    
+    `)
+}
+
+function createThemeFolder() {
+    if (!fs.existsSync(p)) {
+        fs.mkdirSync(p, {recursive: true})
+
+        createThemes()
+    }
+
+    //loadThemes()
+}
+
+createThemeFolder()
