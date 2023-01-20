@@ -1,15 +1,16 @@
 {
-  "name": "MarkIt",
-  "version": "0.0.1",
-  "description": "",
+  "name": "Mark/'It",
+  "version": "0.0.2",
+  "icon": "icon.png",
+  "description": "Markdown editor with inline live preview.",
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
-    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist | electron .",
-    "packtowin": "electron-packager . MarkIt --platform=win32 --arch=x64 --overwrite",
-    "createWinInstaller": "app/winstaller.js"
+    "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=dist/scripts | electron .",
+    "packtowin": "electron-packager . Mark-It --platform=win32 --arch=x64 --overwrite --out dist/",
+    "setup": "electron-installer-windows --src dist/MarkIt-win32-x64 --dest dist/installers/"
   },
-  "author": "",
+  "author": "L33dy",
   "license": "ISC",
   "dependencies": {
     "electron-packager": "^17.1.1",
@@ -18,7 +19,6 @@
     "turndown": "^7.1.1"
   },
   "devDependencies": {
-    "electron": "^22.0.1",
-    "electron-winstaller": "^5.1.0"
+    "electron": "^22.0.1"
   }
 }

@@ -109,6 +109,16 @@ const createWindow = () => {
                     click() {
                         ParagraphFunctions.addUnorderedList()
                     }
+                },
+                {
+                    type: "separator"
+                },
+                {
+                    label: "Horizontal line",
+                    accelerator: "CmdOrCtrl+Shift+H",
+                    click() {
+                        ParagraphFunctions.addHorizontalLine()
+                    }
                 }
             ]
         },
@@ -240,6 +250,28 @@ class FileFunctions {
 }
 
 class ParagraphFunctions {
+    static async addHorizontalLine() {
+        const focusedContent = webContents.getFocusedWebContents()
+        await focusedContent.executeJavaScript(`
+        var currentNode = document.getSelection().anchorNode
+        
+        var hr = document.createElement("hr")
+        var br = document.createElement("br")
+        currentNode.appendChild(hr)
+        hr.previousElementSibling.remove()
+        currentNode.appendChild(br)
+        
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.setStart(br, 0);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+       
+        ;0
+        `)
+    }
+
     static async addUnorderedList() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`

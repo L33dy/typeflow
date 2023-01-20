@@ -53,7 +53,7 @@ h1::before {
     transform: translateX(-50%) translateY(4px);
     bottom: 0;
     position: absolute;
-    width: 75px;
+    width: 100px;
 }
 
 h2 {
@@ -153,4 +153,12 @@ li ul li ul li {
 
 li ul li ul li ul li {
     list-style: "-  ";
+}
+
+/* Horizontal Line */
+hr {
+    margin: 1em 0;
+    border: 0;
+    height: 0.5px;
+    background-color: var(--grey)
 }
