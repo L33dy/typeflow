@@ -4,7 +4,7 @@ let previousKey = ""
 editor.addEventListener('keydown', (e) => {
     let currentNode = document.getSelection().anchorNode
 
-    if(currentNode.textContent === "-" && e.code === "Space") {
+    if (currentNode.textContent === "-" && e.code === "Space") {
         e.preventDefault()
 
         currentNode.remove()
@@ -22,7 +22,7 @@ editor.addEventListener('keydown', (e) => {
         sel.addRange(range);
     }
 
-    if(e.code === "Tab" && currentNode.nodeName === "LI") {
+    if (e.code === "Tab" && currentNode.nodeName === "LI") {
         e.preventDefault()
 
         let ul = document.createElement("ul")
@@ -39,10 +39,10 @@ editor.addEventListener('keydown', (e) => {
         currentNode.remove()
     }
 
-    if(e.code === "Enter" && currentNode.nodeName === "LI" || e.code === "NumpadEnter" && currentNode.nodeName === "LI") {
+    if (e.code === "Enter" && currentNode.nodeName === "LI" || e.code === "NumpadEnter" && currentNode.nodeName === "LI") {
         e.preventDefault()
 
-        if(!currentNode.previousElementSibling || currentNode.previousElementSibling.parentNode.parentNode.parentNode.nodeName === "DIV") {
+        if (!currentNode.previousElementSibling || currentNode.parentNode.parentNode.nodeName === "DIV") {
             currentNode.remove()
 
             let div = document.createElement("div")
