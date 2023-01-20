@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/mark-it.iml" filepath="$PROJECT_DIR$/.idea/mark-it.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/typeflow.iml" filepath="$PROJECT_DIR$/.idea/typeflow.iml" />
     </modules>
   </component>
 </project>

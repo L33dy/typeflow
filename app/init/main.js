@@ -10,7 +10,7 @@ const createWindow = () => {
         webPreferences: {
             frame: false
         },
-        icon: './icon.png'
+        icon: './icons/notepad-notebook-svgrepo-com.ico'
     })
 
     win.loadFile('index.html')
