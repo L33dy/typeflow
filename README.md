@@ -3,6 +3,8 @@
 **Typeflow** is a markdown editor with live preview directly in the editor.  
 It is made with modern web technologies such as HTML5, JavaScript and Node.js.
 
+![Typeflow Screenshot](typeflow-screenshot.png)
+
 ## Features
 
 **NOTE:** This project is in **beta** so a lot of features will be added in the future.
