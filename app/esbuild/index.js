@@ -24104,9 +24104,9 @@ td.escape = function(text) {
   return text;
 };
 var sourceCode = document.getElementById("source-code");
-var markIt = document.getElementById("editor");
-markIt.addEventListener("input", () => {
-  sourceCode.value = td.turndown(markIt.innerHTML).replace(/"/g, "&quot;");
+var editor = document.getElementById("editor");
+editor.addEventListener("input", () => {
+  sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, "&quot;");
 });
 /*! Bundled license information:
 

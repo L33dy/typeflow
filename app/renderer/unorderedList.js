@@ -93,7 +93,7 @@ function setCaretPosition(offset = 0) {
     var range = document.createRange()
     var sel = window.getSelection()
 
-    range.setStart(markIt.lastChild, offset)
+    range.setStart(editor.lastChild, offset)
     range.collapse(true)
 
     sel.removeAllRanges()

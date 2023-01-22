@@ -202,7 +202,7 @@ class FileFunctions {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
 
-        const editorValue = await focusedContents[0].executeJavaScript("document.getElementById('source-code').value")
+        const editorValue = await focusedContents[0].executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
 
         dialog.showSaveDialog({
             filters: [
@@ -242,7 +242,8 @@ class FileFunctions {
 
                     await focusedContents[0].executeJavaScript(`
                         document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}"
-                        markIt.innerHTML = marked.parse(sourceCode.value)
+                        var editor = document.getElementById("editor")
+                        editor.innerHTML = marked.parse(sourceCode.value)
                         document.title = 'Typeflow - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
                         
                         Editor.triggerInput()
