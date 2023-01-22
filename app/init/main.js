@@ -162,7 +162,14 @@ const createWindow = () => {
             ]
         },
         {
-          label: "Themes"
+            label: "Themes",
+            submenu: fileNames.map((fileName) => {
+                return {label: fileName.replace("css", "").replace(/[-.]/g, " ").split(" ").map((word) => {
+                    return word.charAt(0).toUpperCase() + word.slice(1)
+                    }).join(" "), click: (e) => {
+                        Themes.loadTheme(e.label)
+                    }}
+            })
         },
         {
             label: "View",
@@ -186,6 +193,7 @@ const createWindow = () => {
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
+
 }
 
 app.whenReady().then(() => {
@@ -342,6 +350,7 @@ class ParagraphFunctions {
     `)
     }
 }
+
 class ViewFunctions {
     static toggleSourceMode() {
         const focusedContent = webContents.getFocusedWebContents()
@@ -364,6 +373,7 @@ class ViewFunctions {
 
 // Create theme folder
 const p = (electron.app || electron.remote.app).getPath('userData') + "/themes"
+
 function createThemes() {
     console.log("Creating basic themes...")
 
@@ -375,20 +385,20 @@ function createThemes() {
     fs.writeFileSync(path.join(p, cssName), cssContent)
 }
 
-async function loadThemes() {
+class Themes {
+    static async loadTheme(name) {
+        console.log("Loading theme: " + name)
+    }
+}
+
+var fileNames;
+
+function readAllThemes() {
     const files = fs.readdirSync(p);
 
-// Filter out any directories and store the names of all files in a new array
-    const fileNames = files.filter((file) => {
+    fileNames = files.filter((file) => {
         return fs.lstatSync(path.join(p, file)).isFile();
     });
-
-    var focusedContent = webContents.getFocusedWebContents()
-    await focusedContent.executeJavaScript(`
-        var stylesheet = document.getElementById("stylesheet")
-        stylesheet.href = ${p} + "/${fileNames[0]}"
-    
-    `)
 }
 
 function createThemeFolder() {
@@ -398,7 +408,7 @@ function createThemeFolder() {
         createThemes()
     }
 
-    //loadThemes()
+    readAllThemes()
 }
 
 createThemeFolder()

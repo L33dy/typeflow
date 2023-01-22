@@ -7,6 +7,12 @@
     <link id="stylesheet" rel="stylesheet" href="themes/typeflow-classic.css">
 </head>
 <body>
+<div class="format-panel">
+    <img id="b" src="icons/UI/bold.svg">
+    <img id="i" src="icons/UI/italic.svg">
+    <img id="u" src="icons/UI/underline.svg">
+    <img id="t" src="icons/UI/strikethrough.svg">
+</div>
 
 <div autofocus spellcheck="false" contenteditable="true" class="editor" id="editor"></div>
 <textarea class="source-code-view" id="source-code" style="display: none;"></textarea>
@@ -19,6 +25,7 @@
 <script src="app/renderer/checkChanges.js"></script>
 <script src="app/renderer/unorderedList.js"></script>
 <script src="app/renderer/counter.js"></script>
+<script src="app/format-panel.js"></script>
 <script src="app/editor.js"></script>
 </body>
 </html>
