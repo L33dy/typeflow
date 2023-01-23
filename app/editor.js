@@ -12,4 +12,8 @@ class Editor {
             currentNode.lastChild.remove()
         }
     }
+
+    static getCurrentNode() {
+        return document.getSelection().anchorNode
+    }
 }

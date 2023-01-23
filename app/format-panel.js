@@ -6,67 +6,59 @@ let t = document.getElementById("t")
 let boldText = false
 
 document.addEventListener('keydown', (e) => {
-    if(e.ctrlKey && e.code === "KeyB") {
-        if(b.className !== "active") {
+    if (e.ctrlKey && e.code === "KeyB") {
+        if (b.className !== "active") {
             b.className = "active"
             boldText = true
-        }
-        else {
+        } else {
             b.className = ""
             boldText = false
         }
-
-        return
-    }
-    else if(e.ctrlKey && e.code === "KeyI") {
-        if(i.className !== "active") {
+    } else if (e.ctrlKey && e.code === "KeyI") {
+        if (i.className !== "active") {
             i.className = "active"
-        }
-        else {
+        } else {
             i.className = ""
         }
-    }
-    else if(e.ctrlKey && e.code === "KeyU") {
-        if(u.className !== "active") {
+    } else if (e.ctrlKey && e.code === "KeyU") {
+        if (u.className !== "active") {
             u.className = "active"
-        }
-        else {
+        } else {
             u.className = ""
         }
-    }
-    else if(e.ctrlKey && e.code === "KeyT") {
-        if(t.className !== "active") {
+    } else if (e.ctrlKey && e.code === "KeyT") {
+        if (t.className !== "active") {
             t.className = "active"
-        }
-        else {
+        } else {
             t.className = ""
         }
     }
 })
 
 document.addEventListener('input', () => {
+    checkFormat()
+})
+
+document.addEventListener('mouseup', () => {
+    checkFormat()
+})
+
+function checkFormat() {
+    var currentNodeName = document.getSelection().anchorNode.parentNode.nodeName
     var currentNode = document.getSelection().anchorNode
 
-    if(currentNode.parentNode.nodeName === "B") {
+    if (currentNodeName === "B") {
         b.className = "active"
-    }
-    else if(currentNode.parentNode.nodeName === "I") {
+    } else if (currentNodeName === "I") {
         i.className = "active"
-
-        if(currentNode.parentNode.style.fontWeight === "bold") {
-            b.className = "active"
-        }
-    }
-    else if(currentNode.parentNode.nodeName === "U") {
+    } else if (currentNodeName === "U") {
         u.className = "active"
-    }
-    else if(currentNode.parentNode.nodeName === "STRIKE") {
+    } else if (currentNodeName === "STRIKE") {
         t.className = "active"
+    } else {
+        if (b.className === "active") b.className = ""
+        if (i.className === "active") i.className = ""
+        if (u.className === "active") u.className = ""
+        if (t.className === "active") t.className = ""
     }
-    else {
-        if(b.className === "active") b.className = ""
-        if(i.className === "active") i.className = ""
-        if(u.className === "active") u.className = ""
-        if(t.className === "active") t.className = ""
-    }
-})
+}

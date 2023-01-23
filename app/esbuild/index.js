@@ -23524,14 +23524,6 @@ var require_turndown_cjs = __commonJS({
         }
       }
     };
-    rules.underline = {
-      filter: "u",
-      replacement: function(content, node, options) {
-        if (!content.trim())
-          return "";
-        return "<u>" + content + "</u>";
-      }
-    };
     rules.listItem = {
       filter: "li",
       replacement: function(content, node, options) {
@@ -24112,10 +24104,32 @@ var td = new TurndownService({
 td.escape = function(text) {
   return text;
 };
+td.addRule("underline", {
+  filter: ["u"],
+  replacement: function(content) {
+    return "<u>" + content + "</u>";
+  }
+});
+td.addRule("strikethrough", {
+  filter: ["strike", "del"],
+  replacement: function(content) {
+    return "<strike>" + content + "</strike>";
+  }
+});
 var sourceCode = document.getElementById("source-code");
 var editor = document.getElementById("editor");
 editor.addEventListener("input", () => {
   sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, "&quot;");
+});
+editor.addEventListener("keydown", (e) => {
+  if (e.code === "KeyZ") {
+    var elems = document.querySelectorAll("i[style], u[style], b[style], strike[style]");
+    for (let i = 0; i < elems.length; i++) {
+      var elem = elems[i];
+      var styles = elem.getAttribute("style");
+      console.log(styles);
+    }
+  }
 });
 /*! Bundled license information:
 

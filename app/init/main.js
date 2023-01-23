@@ -140,7 +140,7 @@ const createWindow = () => {
                         let focusedContent = webContents.getFocusedWebContents()
                         await focusedContent.executeJavaScript(`
                             var editor = document.getElementById("editor")
-                            document.execCommand('bold')
+                            document.execCommand('bold', false, null)
                         `)
                     }
                 },
@@ -151,7 +151,7 @@ const createWindow = () => {
                         let focusedContent = webContents.getFocusedWebContents()
                         await focusedContent.executeJavaScript(`
                             var editor = document.getElementById("editor")
-                            document.execCommand('italic')
+                            document.execCommand('italic', false, null)
                         `)
                     }
                 },
@@ -162,7 +162,7 @@ const createWindow = () => {
                         let focusedContent = webContents.getFocusedWebContents()
                         await focusedContent.executeJavaScript(`
                             var editor = document.getElementById("editor")
-                            document.execCommand('underline')
+                            document.execCommand('underline', false, null)
                         `)
                     }
                 },
@@ -201,6 +201,9 @@ const createWindow = () => {
                 },
                 {
                     type: "separator"
+                },
+                {
+                    role: "toggleDevTools"
                 }
             ]
         }

@@ -16,19 +16,18 @@ html, body {
 
 @media only screen and (min-width: 1000px) {
     .editor {
-        padding-left: 35%;
-        padding-right: 35%;
+        padding-left: 25%;
+        padding-right: 25%;
     }
 }
 
 .source-code-view {
-    background-color: #e8e8e8;
+    background-color: #ececec;
     border: none;
 
-    height: 85%;
+    height: 90%;
     width: 70%;
-    margin: 1.5em auto 0 auto;
-    overflow-x: hidden;
+    margin: 2em auto 0 auto;
 }
 
 .bottom-panel {
