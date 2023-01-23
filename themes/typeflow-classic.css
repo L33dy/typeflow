@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&display=swap');
 
 /* Colors */
 :root {
@@ -125,7 +126,7 @@ ul, li {
 
 /* First */
 ul {
-    padding: 0 0 0 1.75rem;
+    padding: 0.5em 0 0 1.75em;
 }
 
 /* Nested */
@@ -161,4 +162,19 @@ hr {
     border: 0;
     height: 0.5px;
     background-color: var(--grey)
+}
+
+/* Code */
+code {
+    font-family: 'JetBrains Mono', sans-serif;
+    font-weight: 300;
+
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+    background-color: #384d39;
+    border-radius: 3px;
+    color: #f1f1f1;
+
+    display: inline-block;
+    width: 100%;
 }

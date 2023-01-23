@@ -3,19 +3,21 @@
 html, body {
     margin: 0;
     padding: 0;
-    height: 95%;
+    height: 90%;
     overflow-x: hidden;
+
+    z-index: 10;
 }
 
 .editor {
-    height: 95%;
-    padding: 1.5em 15% 0 15%;
+    height: 90%;
+    padding: 2em 15% 0 15%;
 }
 
 @media only screen and (min-width: 1000px) {
     .editor {
-        padding-left: 30%;
-        padding-right: 30%;
+        padding-left: 35%;
+        padding-right: 35%;
     }
 }
 
@@ -54,19 +56,23 @@ html, body {
 
 .format-panel {
     position: absolute;
-    width: 100vw;
+    width: 75%;
+    left: 50%;
+    transform: translate(-50%);
 
     display: flex;
     justify-content: center;
     align-content: center;
     flex-direction: row;
+
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .format-panel img {
     height: 1.75em;
     transition: 175ms;
 
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .format-panel .active {

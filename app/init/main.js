@@ -120,6 +120,13 @@ const createWindow = () => {
                     click() {
                         ParagraphFunctions.addHorizontalLine()
                     }
+                },
+                {
+                    label: "Code Block",
+                    accelerator: "CmdOrCtrl+Shift+K",
+                    click() {
+                        ParagraphFunctions.addCodeBlock()
+                    }
                 }
             ]
         },
@@ -158,6 +165,17 @@ const createWindow = () => {
                             document.execCommand('underline')
                         `)
                     }
+                },
+                {
+                    label: "Strikethrough",
+                    accelerator: "CmdOrCtrl+T",
+                    async click() {
+                        let focusedContent = webContents.getFocusedWebContents()
+                        await focusedContent.executeJavaScript(`
+                        var editor = document.getElementById("editor")
+                        document.execCommand("strikethrough", false, null)
+                        `)
+                    }
                 }
             ]
         },
@@ -183,9 +201,6 @@ const createWindow = () => {
                 },
                 {
                     type: "separator"
-                },
-                {
-                    role: 'toggleDevTools'
                 }
             ]
         }
@@ -263,6 +278,24 @@ class FileFunctions {
 }
 
 class ParagraphFunctions {
+    static async addCodeBlock() {
+        const focusedContent = webContents.getFocusedWebContents()
+        await focusedContent.executeJavaScript(`
+        var currentNode = document.getSelection().anchorNode
+        
+        var pre = document.createElement("pre")
+        var code = document.createElement("code")
+        var br = document.createElement("br")
+        
+        Editor.removeBR()
+        
+        currentNode.appendChild(pre)
+        pre.appendChild(code)
+        code.appendChild(br)
+        
+        Editor.triggerInput()
+        `)
+    }
     static async addHorizontalLine() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`
@@ -275,12 +308,6 @@ class ParagraphFunctions {
         
         currentNode.appendChild(hr)
         currentNode.appendChild(br)
-        
-        /*if(currentNode.parentNode.nodeName !== "BODY") {
-            hr.previousElementSibling.remove()
-        }*/
-        
-        
         
         var range = document.createRange();
         var sel = window.getSelection();

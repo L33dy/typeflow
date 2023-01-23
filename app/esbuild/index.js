@@ -24106,7 +24106,8 @@ var TurndownService = require_turndown_cjs();
 var td = new TurndownService({
   headingStyle: "atx",
   emDelimiter: "*",
-  bulletListMarker: "-"
+  bulletListMarker: "-",
+  codeBlockStyle: "fenced"
 });
 td.escape = function(text) {
   return text;

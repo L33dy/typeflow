@@ -5,7 +5,8 @@ const TurndownService = require('turndown')
 let td = new TurndownService({
     headingStyle: 'atx',
     emDelimiter: '*',
-    bulletListMarker: '-'
+    bulletListMarker: '-',
+    codeBlockStyle: 'fenced'
 })
 
 td.escape = function (text) {

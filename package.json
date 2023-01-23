@@ -1,8 +1,8 @@
 {
   "name": "Typeflow",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "icon": "icon.ico",
-  "description": "Markdown editor with inline live preview.",
+  "description": "Markdown editor with inline live preview for everyone, anywhere.",
   "main": "app/init/main.js",
   "scripts": {
     "start": "electron .",
