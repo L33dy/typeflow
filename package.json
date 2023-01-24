@@ -8,18 +8,19 @@
     "start": "electron .",
     "build": "esbuild app/renderer/index.js --bundle --platform=node --outdir=app/esbuild | electron .",
     "packtowin": "electron-packager . Typeflow --platform=win32 --arch=x64 --overwrite --out dist/ --icon icons/icon.ico --prune=true ",
+    "packtomac": "electron-packager . Typeflow --platform=darwin --arch=x64 --overwrite --out dist/ --icon icons/icon.ico --prune=true",
     "setup": "electron-installer-windows --src dist/Typeflow-win32-x64 --dest dist/installers/"
   },
   "author": "L33dy",
   "license": "ISC",
   "dependencies": {
     "electron-packager": "^17.1.1",
-    "esbuild": "^0.17.1",
+    "esbuild": "^0.17.4",
     "highlight.js": "^11.7.0",
     "marked": "^4.2.5",
     "turndown": "^7.1.1"
   },
   "devDependencies": {
-    "electron": "^22.0.1"
+    "electron": "^22.0.3"
   }
 }
