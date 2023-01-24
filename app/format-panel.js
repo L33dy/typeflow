@@ -56,9 +56,11 @@ function checkFormat() {
     } else if (currentNodeName === "STRIKE") {
         t.className = "active"
     } else {
-        if (b.className === "active") b.className = ""
-        if (i.className === "active") i.className = ""
-        if (u.className === "active") u.className = ""
-        if (t.className === "active") t.className = ""
+        if (b.className === "active") b.removeAttribute("class")
+        if (i.className === "active") i.removeAttribute("class")
+        if (u.className === "active") u.removeAttribute("class")
+        if (t.className === "active") t.removeAttribute("class")
+
+        Editor.formatElements()
     }
 }

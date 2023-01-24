@@ -201,9 +201,6 @@ const createWindow = () => {
                 },
                 {
                     type: "separator"
-                },
-                {
-                    role: "toggleDevTools"
                 }
             ]
         }

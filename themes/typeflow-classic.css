@@ -177,4 +177,6 @@ code {
 
     display: inline-block;
     width: 100%;
+
+    white-space: break-spaces;
 }

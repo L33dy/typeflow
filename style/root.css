@@ -68,7 +68,7 @@ html, body {
 }
 
 .format-panel img {
-    height: 1.75em;
+    height: 1.7em;
     transition: 175ms;
 
     opacity: 0.4;
@@ -76,6 +76,7 @@ html, body {
 
 .format-panel .active {
     opacity: 1;
+    height: 1.9em;
 }
 
 /* custom scrollbar */
