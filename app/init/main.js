@@ -201,6 +201,9 @@ const createWindow = () => {
                 },
                 {
                     type: "separator"
+                },
+                {
+                    role: "toggleDevTools"
                 }
             ]
         }
@@ -404,7 +407,7 @@ const p = (electron.app || electron.remote.app).getPath('userData') + "/themes"
 function createThemes() {
     console.log("Creating basic themes...")
 
-    const existingThemePath = "./themes/typeflow-classic.css"
+    const existingThemePath = path.join(app.getAppPath() + "/themes/typeflow-classic.css")
     const cssName = "typeflow-classic.css"
 
     const cssContent = fs.readFileSync(existingThemePath, 'utf-8')
