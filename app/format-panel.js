@@ -47,7 +47,7 @@ function checkFormat() {
     var currentNodeName = document.getSelection().anchorNode.parentNode.nodeName
     var currentNode = document.getSelection().anchorNode
 
-    if (currentNodeName === "B") {
+    if (currentNodeName === "B" || currentNodeName === "STRONG") {
         b.className = "active"
     } else if (currentNodeName === "I") {
         i.className = "active"

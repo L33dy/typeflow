@@ -2,7 +2,7 @@ const {app, BrowserWindow, Menu, MenuItem, globalShortcut, webContents, dialog, 
 const {writeFile, readFile} = require('fs')
 const electron = require('electron')
 const fs = require('fs')
-const path = require("path");
+let path = require("path");
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -29,10 +29,17 @@ const createWindow = () => {
                     },
                 },
                 {
-                    label: "Save File",
-                    accelerator: "CmdOrCtrl+S",
+                  label: "Save File",
+                  accelerator: "CmdOrCtrl+S",
+                  click() {
+                      FileFunctions.saveFile()
+                  }
+                },
+                {
+                    label: "Save File As",
+                    accelerator: "CmdOrCtrl+Shift+S",
                     click() {
-                        FileFunctions.saveFile()
+                        FileFunctions.saveFileAs()
                     }
                 },
                 {
@@ -127,6 +134,13 @@ const createWindow = () => {
                     click() {
                         ParagraphFunctions.addCodeBlock()
                     }
+                },
+                {
+                    label: "Quote",
+                    accelerator: "CmdOrCtrl+Q",
+                    click() {
+                        ParagraphFunctions.addQuote()
+                    }
                 }
             ]
         },
@@ -141,6 +155,8 @@ const createWindow = () => {
                         await focusedContent.executeJavaScript(`
                             var editor = document.getElementById("editor")
                             document.execCommand('bold', false, null)
+
+                            Editor.triggerInput()                            
                         `)
                     }
                 },
@@ -152,6 +168,8 @@ const createWindow = () => {
                         await focusedContent.executeJavaScript(`
                             var editor = document.getElementById("editor")
                             document.execCommand('italic', false, null)
+                            
+                            Editor.triggerInput()                            
                         `)
                     }
                 },
@@ -163,6 +181,8 @@ const createWindow = () => {
                         await focusedContent.executeJavaScript(`
                             var editor = document.getElementById("editor")
                             document.execCommand('underline', false, null)
+                            
+                            Editor.triggerInput()
                         `)
                     }
                 },
@@ -174,6 +194,8 @@ const createWindow = () => {
                         await focusedContent.executeJavaScript(`
                         var editor = document.getElementById("editor")
                         document.execCommand("strikethrough", false, null)
+                        
+                        Editor.triggerInput()
                         `)
                     }
                 }
@@ -224,7 +246,20 @@ class FileFunctions {
         win.reload()
     }
 
+    path = ""
+
     static async saveFile() {
+        var focusedContent = webContents.getFocusedWebContents()
+        let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
+
+        fs.writeFileSync(path, content)
+
+        await webContents.getFocusedWebContents().executeJavaScript(`
+        document.title = document.title.replace("•", "")
+        `)
+    }
+
+    static async saveFileAs() {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
 
@@ -262,17 +297,18 @@ class FileFunctions {
                     console.log(err);
                 } else {
                     console.log(result.filePaths[0])
+                    path = result.filePaths[0]
 
                     const allContents = webContents.getAllWebContents()
                     const focusedContents = allContents.filter(wc => wc.isFocused())
 
                     await focusedContents[0].executeJavaScript(`
-                        document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n')}"
+                        document.getElementById('source-code').value = "${data.replace(/\r\n|\r|\n/g, '\\n').replace(/"/g, '&quot;')}"
                         var editor = document.getElementById("editor")
                         editor.innerHTML = marked.parse(sourceCode.value)
                         document.title = 'Typeflow - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
                         
-                        Editor.triggerInput()
+                        // Editor.triggerInput()
                         `);
                 }
             });
@@ -281,6 +317,21 @@ class FileFunctions {
 }
 
 class ParagraphFunctions {
+    static async addQuote() {
+        await webContents.getFocusedWebContents().executeJavaScript(`
+        var currentNode = Editor.getCurrentNode()
+        
+        var q = document.createElement("q")
+        
+        Editor.removeBR()
+        
+        currentNode.appendChild(q)
+        q.appendChild(document.createElement("br"))
+        
+        Editor.triggerInput()
+        `)
+    }
+
     static async addCodeBlock() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`
