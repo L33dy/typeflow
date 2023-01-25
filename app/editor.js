@@ -5,6 +5,15 @@ class Editor {
         editor.dispatchEvent(new Event("input"))
     }
 
+    static setSelectorPosition(startNode, offset = 0) {
+        var range = document.createRange();
+        var sel = window.getSelection();
+        range.setStart(startNode, offset);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+
     static removeBR() {
         var currentNode = document.getSelection().anchorNode
 

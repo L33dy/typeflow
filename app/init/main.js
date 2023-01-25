@@ -136,7 +136,7 @@ const createWindow = () => {
                     }
                 },
                 {
-                    label: "Quote",
+                    label: "Blockquote",
                     accelerator: "CmdOrCtrl+Q",
                     click() {
                         ParagraphFunctions.addQuote()
@@ -321,7 +321,7 @@ class ParagraphFunctions {
         await webContents.getFocusedWebContents().executeJavaScript(`
         var currentNode = Editor.getCurrentNode()
         
-        var q = document.createElement("q")
+        var q = document.createElement("blockquote")
         
         Editor.removeBR()
         

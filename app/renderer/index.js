@@ -23,7 +23,7 @@ td.addRule('underline', {
 td.addRule('strikethrough', {
     filter: ['strike', 'del'],
     replacement: function(content) {
-        return '<strike>' + content + '</strike>'
+        return '<del>' + content + '</del>'
     }
 })
 
