@@ -14,3 +14,14 @@ function addMark() {
         }
     }
 }
+
+class Title {
+    static isDocumentSaved() {
+        if(document.title === "Typeflow" || document.title === "Typeflow - Untitled.md•") {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+}

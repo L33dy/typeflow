@@ -250,6 +250,15 @@ class FileFunctions {
 
     static async saveFile() {
         var focusedContent = webContents.getFocusedWebContents()
+
+        let isSaved = await focusedContent.executeJavaScript(`Title.isDocumentSaved()`)
+
+        if(!isSaved) {
+            await this.saveFileAs(false)
+
+            return
+        }
+
         let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
 
         fs.writeFileSync(path, content)
@@ -259,30 +268,52 @@ class FileFunctions {
         `)
     }
 
-    static async saveFileAs() {
+    static async saveFileAs(withFileName = true) {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
 
         const editorValue = await focusedContents[0].executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
 
-        dialog.showSaveDialog({
-            filters: [
-                {name: 'Markdown', extensions: ['md']}
-            ]
-        }).then(result => {
-            // Write the contents of the div to the selected file
-            writeFile(result.filePath, editorValue, async (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log('File saved');
+        if(!withFileName) {
+            dialog.showSaveDialog({
+                filters: [
+                    {name: 'Markdown', extensions: ['md']}
+                ]
+            }).then(result => {
+                // Write the contents of the div to the selected file
+                writeFile(result.filePath, editorValue, async (err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('File saved');
 
-                    await focusedContents[0].executeJavaScript(`
+                        await focusedContents[0].executeJavaScript(`
                     document.title = 'Typeflow - ${result.filePath.replace(/^.*[\\\/]/, '')}'
                     `);
-                }
+                    }
+                });
             });
-        });
+        }
+        else {
+            dialog.showSaveDialog({
+                filters: [
+                    {name: 'Markdown', extensions: ['md']}
+                ],
+                defaultPath: path
+            }).then(result => {
+                writeFile(result.filePath, editorValue, async (err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('File saved');
+
+                        await focusedContents[0].executeJavaScript(`
+                    document.title = 'Typeflow - ${result.filePath.replace(/^.*[\\\/]/, '')}'
+                    `);
+                    }
+                });
+            })
+        }
     }
 
     static async openFile() {

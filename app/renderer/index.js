@@ -33,3 +33,5 @@ let editor = document.getElementById("editor")
 editor.addEventListener('input', () => {
     sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, '&quot;')
 })
+
+console.log(document.getElementById("stylesheet").href)
