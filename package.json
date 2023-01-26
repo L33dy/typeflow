@@ -16,8 +16,10 @@
   "dependencies": {
     "electron-packager": "^17.1.1",
     "esbuild": "^0.17.4",
+    "fs-extra": "^11.1.0",
     "highlight.js": "^11.7.0",
     "marked": "^4.2.5",
+    "md-to-pdf": "^5.2.1",
     "turndown": "^7.1.1"
   },
   "devDependencies": {

@@ -1,8 +1,11 @@
+'use strict'
+
 const {app, BrowserWindow, Menu, MenuItem, globalShortcut, webContents, dialog, ipcRenderer} = require('electron')
 const {writeFile, readFile} = require('fs')
 const electron = require('electron')
 const fs = require('fs')
 let path = require("path");
+const { mdToPdf } = require('md-to-pdf')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -29,11 +32,11 @@ const createWindow = () => {
                     },
                 },
                 {
-                  label: "Save File",
-                  accelerator: "CmdOrCtrl+S",
-                  click() {
-                      FileFunctions.saveFile()
-                  }
+                    label: "Save File",
+                    accelerator: "CmdOrCtrl+S",
+                    click() {
+                        FileFunctions.saveFile()
+                    }
                 },
                 {
                     label: "Save File As",
@@ -203,12 +206,14 @@ const createWindow = () => {
         },
         {
             label: "Themes",
-            submenu: fileNames.map((fileName) => {
-                return {label: fileName.replace("css", "").replace(/[-.]/g, " ").split(" ").map((word) => {
-                    return word.charAt(0).toUpperCase() + word.slice(1)
-                    }).join(" "), click: (e) => {
-                        Themes.loadTheme(e.label)
-                    }}
+            submenu: Themes.getThemeNames().map((fileName) => {
+                return {
+                    label: fileName.replace("css", "").replace(/[-.]/g, " ").split(" ").map((word) => {
+                        return word.charAt(0).toUpperCase() + word.slice(1)
+                    }).join(" "), click: () => {
+                        Themes.loadTheme(fileName)
+                    }
+                }
             })
         },
         {
@@ -241,12 +246,22 @@ app.whenReady().then(() => {
 })
 
 class FileFunctions {
+    path = ""
+
+    /*static async exportToPDF() {
+        const pdf = await mdToPdf({ path: path }).catch(console.log("error"))
+
+        if(pdf) {
+            fs.writeFileSync(pdf.fileName, pdf.content)
+        }
+    }*/
+
     static async newFile() {
         let win = BrowserWindow.getFocusedWindow()
         win.reload()
     }
 
-    path = ""
+
 
     static async saveFile() {
         var focusedContent = webContents.getFocusedWebContents()
@@ -370,6 +385,7 @@ class ParagraphFunctions {
         
         var pre = document.createElement("pre")
         var code = document.createElement("code")
+        code.setAttribute("class", "language-python")
         var br = document.createElement("br")
         
         Editor.removeBR()
@@ -381,6 +397,7 @@ class ParagraphFunctions {
         Editor.triggerInput()
         `)
     }
+
     static async addHorizontalLine() {
         const focusedContent = webContents.getFocusedWebContents()
         await focusedContent.executeJavaScript(`
@@ -483,44 +500,6 @@ class ViewFunctions {
     }
 }
 
-// Create theme folder
-const p = (electron.app || electron.remote.app).getPath('userData') + "/themes"
+var Themes = require('../themes.js')
 
-function createThemes() {
-    console.log("Creating basic themes...")
-
-    const existingThemePath = path.join(app.getAppPath() + "/themes/typeflow-classic.css")
-    const cssName = "typeflow-classic.css"
-
-    const cssContent = fs.readFileSync(existingThemePath, 'utf-8')
-
-    fs.writeFileSync(path.join(p, cssName), cssContent)
-}
-
-class Themes {
-    static async loadTheme(name) {
-        console.log("Loading theme: " + name)
-    }
-}
-
-var fileNames;
-
-function readAllThemes() {
-    const files = fs.readdirSync(p);
-
-    fileNames = files.filter((file) => {
-        return fs.lstatSync(path.join(p, file)).isFile();
-    });
-}
-
-function createThemeFolder() {
-    if (!fs.existsSync(p)) {
-        fs.mkdirSync(p, {recursive: true})
-
-        createThemes()
-    }
-
-    readAllThemes()
-}
-
-createThemeFolder()
+Themes.createThemeFolder()

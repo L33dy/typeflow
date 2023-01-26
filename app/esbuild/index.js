@@ -23524,14 +23524,6 @@ var require_turndown_cjs = __commonJS({
         }
       }
     };
-    rules.underline = {
-      filter: "u",
-      replacement: function(content, node, options) {
-        if (!content.trim())
-          return "";
-        return "<u>" + content + "</u>";
-      }
-    };
     rules.listItem = {
       filter: "li",
       replacement: function(content, node, options) {
@@ -24129,6 +24121,7 @@ var editor = document.getElementById("editor");
 editor.addEventListener("input", () => {
   sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, "&quot;");
 });
+console.log("Stylesheet: " + document.getElementById("stylesheet").href);
 /*! Bundled license information:
 
 domino/lib/cssparser.js:

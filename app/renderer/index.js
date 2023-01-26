@@ -15,14 +15,14 @@ td.escape = function (text) {
 
 td.addRule('underline', {
     filter: ['u'],
-    replacement: function(content) {
+    replacement: function (content) {
         return '<u>' + content + '</u>'
     }
 })
 
 td.addRule('strikethrough', {
     filter: ['strike', 'del'],
-    replacement: function(content) {
+    replacement: function (content) {
         return '<del>' + content + '</del>'
     }
 })
@@ -34,4 +34,4 @@ editor.addEventListener('input', () => {
     sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, '&quot;')
 })
 
-console.log(document.getElementById("stylesheet").href)
+console.log("Stylesheet: " + document.getElementById("stylesheet").href)
