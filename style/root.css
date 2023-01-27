@@ -10,8 +10,8 @@ html, body {
 }
 
 .editor {
-    height: 90%;
-    padding: 2em 15% 0 15%;
+    height: 75%;
+    padding: 2em 15% 2em 15%;
 }
 
 @media only screen and (min-width: 1000px) {
@@ -69,6 +69,8 @@ html, body {
     opacity: 0.4;
 
     transition: 175ms;
+
+    user-select: none;
 }
 
 /* custom scrollbar */

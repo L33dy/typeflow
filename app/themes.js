@@ -1,15 +1,13 @@
 'use strict'
 
 const fs = require('fs')
-const fs_extra = require('fs-extra')
-const path = require('path')
-const electron = require('electron')
 const { app, webContents } = require('electron')
 
-const appDataPath = (electron.app || electron.remote.app).getPath('userData') + "/themes"
+//const appDataPath = (electron.app || electron.remote.app).getPath('userData') + "/themes"
+const themePath = app.getAppPath() + "/themes"
 
 module.exports =  class Themes {
-    static createThemeFolder() {
+    /*static createThemeFolder() {
         if(!fs.existsSync(appDataPath)) {
             fs.mkdirSync(appDataPath, { recursive: true })
 
@@ -35,10 +33,10 @@ module.exports =  class Themes {
 
             fs.writeFileSync(path.join(projectThemeFolder, themeName), themeContent)
         }
-    }
+    }*/
 
     static getThemeNames() {
-        return fs.readdirSync(appDataPath)
+        return fs.readdirSync(themePath)
     }
 
     static async loadTheme(name) {
@@ -51,6 +49,7 @@ module.exports =  class Themes {
     }
 }
 
+/*
 function createDefaultTheme() {
     console.log("Creating default theme...")
 
@@ -60,4 +59,4 @@ function createDefaultTheme() {
     const cssContent = fs.readFileSync(existingThemePath, 'utf-8')
 
     fs.writeFileSync(path.join(appDataPath, cssName), cssContent)
-}
+}*/

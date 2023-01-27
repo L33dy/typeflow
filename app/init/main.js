@@ -1,11 +1,10 @@
 'use strict'
 
-const {app, BrowserWindow, Menu, MenuItem, globalShortcut, webContents, dialog, ipcRenderer} = require('electron')
+const {app, BrowserWindow, Menu, webContents, dialog} = require('electron')
 const {writeFile, readFile} = require('fs')
-const electron = require('electron')
 const fs = require('fs')
 let path = require("path");
-const { mdToPdf } = require('md-to-pdf')
+const Themes = require('../themes.js')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -225,9 +224,6 @@ const createWindow = () => {
                     click() {
                         ViewFunctions.toggleSourceMode()
                     }
-                },
-                {
-                    type: "separator"
                 },
                 {
                     role: "toggleDevTools"
@@ -500,6 +496,4 @@ class ViewFunctions {
     }
 }
 
-var Themes = require('../themes.js')
-
-Themes.createThemeFolder()
+//Themes.createThemeFolder()

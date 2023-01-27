@@ -18,11 +18,11 @@
 <textarea class="source-code-view" id="source-code" style="display: none;"></textarea>
 
 <div class="bottom-panel">
-    <div class="format-icons">
-        <img id="b" src="icons/UI/bold.svg">
-        <img id="i" src="icons/UI/italic.svg">
-        <img id="u" src="icons/UI/underline.svg">
-        <img id="t" src="icons/UI/strikethrough.svg">
+    <div class="format-icons" draggable="false">
+        <img id="b" src="icons/UI/bold.svg" draggable="false">
+        <img id="i" src="icons/UI/italic.svg" draggable="false">
+        <img id="u" src="icons/UI/underline.svg" draggable="false">
+        <img id="t" src="icons/UI/strikethrough.svg" draggable="false">
     </div>
     <p id="counter">Words: 0</p>
 </div>
@@ -30,7 +30,7 @@
 <script src="app/esbuild/index.js"></script>
 <script src="app/renderer/checkChanges.js"></script>
 <script src="app/renderer/unorderedList.js"></script>
-<script src="app/renderer/brackets.js"></script>
+<script src="app/renderer/doubleChars.js"></script>
 <script src="app/renderer/multiLineElements.js"></script>
 <script src="app/renderer/counter.js"></script>
 <script src="app/format-icons.js"></script>

@@ -64,3 +64,8 @@ function checkFormat() {
         Editor.formatElements()
     }
 }
+
+/* Idea how to improve highlighting format icons:
+* Check every format element and its parents
+*
+*  */
