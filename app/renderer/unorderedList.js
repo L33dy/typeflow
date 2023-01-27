@@ -4,16 +4,21 @@ let previousKey = ""
 editor.addEventListener('keydown', (e) => {
     let currentNode = document.getSelection().anchorNode
 
+    if(e.key === "Backspace") {
+        //e.preventDefault()
+    }
+
     if (currentNode.textContent === "-" && e.code === "Space") {
         e.preventDefault()
 
-        currentNode.remove()
         Editor.removeBR()
 
         let ul = document.createElement("ul");
-        editor.appendChild(ul);
+        currentNode.parentNode.appendChild(ul);
         let li = document.createElement("li")
         ul.appendChild(li)
+
+        currentNode.remove()
 
         let range = document.createRange();
         let sel = window.getSelection();

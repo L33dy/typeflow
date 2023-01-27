@@ -1,47 +1,41 @@
 var editor = document.getElementById("editor")
-var hasBrackets = false
+var currentBracket = ''
 
-editor.addEventListener('keyup', (e) => {
+editor.addEventListener('keydown', (e) => {
     var node = Editor.getCurrentNode()
-    var currentBracket = ''
 
     if (e.key === "(") {
         addBracket(")")
+        currentBracket = ')'
     }
 
     if (e.key === "{") {
         addBracket("}")
+        currentBracket = '}'
     }
 
     if (e.key === "[") {
         addBracket("]")
+        currentBracket = ']'
     }
 
     // Backspace
-    if (e.code === "Backspace") {
-        removeBrackets()
-
-        console.log("removing brackets")
+    if (e.key === "Backspace" && currentBracket !== '') {
+        removeBrackets(node, currentBracket)
     }
 })
 
-function removeBrackets(node) {
+function removeBrackets(node, currBracket) {
+    var e = node.parentElement.textContent
+
     var sel = window.getSelection()
-    var range = sel.getRangeAt(0)
-    var text = range.startContainer.textContent
+    var caretPos = sel.getRangeAt(0).startOffset
 
-    var start = range.startOffset
-    var end = range.endOffset
+    if(e.charAt(caretPos) !== currBracket) return
 
-    if (text[start - 1] === "(" && text[end] === ")") {
-        range.startContainer.textContent = text.slice(0, start - 1) + text.slice(end + 1)
+    node.parentElement.textContent = node.parentElement.textContent.substring(0, caretPos - 1) + node.parentElement.textContent.substring(caretPos + 1)
 
-        range.setStart(range.startContainer, start - 1)
-        range.setEnd(range.startContainer, start - 1)
-
-        sel.removeAllRanges()
-        sel.addRange(range)
-    }
+    currentBracket = ''
 }
 
 function addBracket(bracket) {
