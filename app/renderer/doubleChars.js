@@ -1,35 +1,47 @@
 var editor = document.getElementById("editor")
-var currentBracket = undefined
+var currentChar = undefined
 
 editor.addEventListener('keydown', (e) => {
     var node = Editor.getCurrentNode()
 
     if (e.key === "(") {
-        addBracket(")")
-        currentBracket = '('
+        addChar(")")
+        currentChar = '('
     }
 
     if (e.key === "{") {
-        addBracket("}")
-        currentBracket = '{'
+        addChar("}")
+        currentChar = '{'
     }
 
     if (e.key === "[") {
-        addBracket("]")
-        currentBracket = '['
+        addChar("]")
+        currentChar = '['
+    }
+
+    if (e.key === '"') {
+        addChar('"')
+        currentChar = '"'
+    }
+
+    if(e.key === "'") {
+        addChar("'")
+        currentChar = "'"
     }
 
     // Backspace
-    if (e.key === "Backspace" && currentBracket !== '') {
-        removeBrackets(node, currentBracket)
+    if (e.key === "Backspace" && currentChar !== '') {
+        removeChars(node, currentChar)
     }
 })
 
-function removeBrackets(node, currBracket) {
+function removeChars(node, currBracket) {
     var e = node.parentElement.textContent
 
     var sel = window.getSelection()
     var caretPos = sel.getRangeAt(0).startOffset
+
+    console.log(node.parentElement.textContent.charAt(caretPos))
 
     if(currBracket === undefined) {
         return
@@ -43,7 +55,7 @@ function removeBrackets(node, currBracket) {
 
     var currNode = Editor.getCurrentNode()
 
-    // If current node has some text in it, don't create empty divs
+    // If current node has some text in it, don't create empty divs (same to lists)
 
     if(currNode.innerHTML !== "" || currNode.nodeName === "LI") {
         currNode.innerHTML += "&nbsp;"
@@ -63,13 +75,13 @@ function removeBrackets(node, currBracket) {
 
     Editor.setSelectorPosition(secondDiv)
 
-    currentBracket = undefined
+    currentChar = undefined
 }
 
-function addBracket(bracket) {
+function addChar(char) {
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
-    const newNode = document.createTextNode(bracket);
+    const newNode = document.createTextNode(char);
 
     range.insertNode(newNode);
     range.setStartBefore(newNode);

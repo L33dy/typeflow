@@ -26,6 +26,10 @@ class Editor {
         return document.getSelection().anchorNode
     }
 
+    static getLastNode() {
+        return document.getElementById("editor").lastChild
+    }
+
     static formatElements() {
         //var elems = document.querySelectorAll('i[style], u[style], b[style], strike[style]')
         var elem = document.getSelection().anchorNode.previousSibling

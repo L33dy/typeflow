@@ -6,8 +6,10 @@ const fs = require('fs')
 let path = require("path");
 const Themes = require('../themes.js')
 
-const createWindow = () => {
-    const win = new BrowserWindow({
+let mainWindow;
+
+app.on('ready', () => {
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -16,7 +18,7 @@ const createWindow = () => {
         icon: './icons/icon.ico'
     })
 
-    win.loadFile('index.html')
+    mainWindow.loadFile("index.html")
 
     // Menu
     const template = [
@@ -131,6 +133,9 @@ const createWindow = () => {
                     }
                 },
                 {
+                    type: "separator"
+                },
+                {
                     label: "Code Block",
                     accelerator: "CmdOrCtrl+Shift+K",
                     click() {
@@ -234,11 +239,6 @@ const createWindow = () => {
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
-
-}
-
-app.whenReady().then(() => {
-    createWindow()
 })
 
 class FileFunctions {
@@ -258,13 +258,12 @@ class FileFunctions {
     }
 
 
-
     static async saveFile() {
         var focusedContent = webContents.getFocusedWebContents()
 
         let isSaved = await focusedContent.executeJavaScript(`Title.isDocumentSaved()`)
 
-        if(!isSaved) {
+        if (!isSaved) {
             await this.saveFileAs(false)
 
             return
@@ -285,7 +284,7 @@ class FileFunctions {
 
         const editorValue = await focusedContents[0].executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
 
-        if(!withFileName) {
+        if (!withFileName) {
             dialog.showSaveDialog({
                 filters: [
                     {name: 'Markdown', extensions: ['md']}
@@ -304,8 +303,7 @@ class FileFunctions {
                     }
                 });
             });
-        }
-        else {
+        } else {
             dialog.showSaveDialog({
                 filters: [
                     {name: 'Markdown', extensions: ['md']}
@@ -349,6 +347,8 @@ class FileFunctions {
                         var editor = document.getElementById("editor")
                         editor.innerHTML = marked.parse(sourceCode.value)
                         document.title = 'Typeflow - ${result.filePaths[0].replace(/^.*[\\\/]/, '')}'
+                        
+                        Editor.setSelectorPosition(Editor.getLastNode())
                         
                         // Editor.triggerInput()
                         `);

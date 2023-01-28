@@ -24120,8 +24120,8 @@ var sourceCode = document.getElementById("source-code");
 var editor = document.getElementById("editor");
 editor.addEventListener("input", () => {
   sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, "&quot;");
+  window.scroll(0, document.body.scrollHeight);
 });
-console.log("Stylesheet: " + document.getElementById("stylesheet").href);
 /*! Bundled license information:
 
 domino/lib/cssparser.js:

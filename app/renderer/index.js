@@ -32,6 +32,6 @@ let editor = document.getElementById("editor")
 
 editor.addEventListener('input', () => {
     sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, '&quot;')
-})
 
-console.log("Stylesheet: " + document.getElementById("stylesheet").href)
+    window.scroll(0, document.body.scrollHeight)
+})
