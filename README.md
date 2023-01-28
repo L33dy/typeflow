@@ -10,6 +10,7 @@ It is made with modern web technologies such as HTML5, JavaScript and Node.js.
 **NOTE:** This project is in **beta** so a lot of features will be added in the future.
 
 -   Preview your elements inline while you type (headers, codeblocks, etc.)
+-   Add your custom themes!
 -   View the text you typed in source code mode
 -   Modern and simple style
 -   And more features to come:)
