@@ -239,6 +239,26 @@ app.on('ready', () => {
 
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)
+
+    mainWindow.on('close', async (e) => {
+        let reg = /Typeflow - .*•/
+
+        if(mainWindow.title === "Typeflow" || !reg.test(mainWindow.title)) return
+
+        const choice = dialog.showMessageBoxSync(mainWindow, {
+            type: 'none',
+            buttons: ['Save', 'Cancel'],
+            defaultId: 0,
+            title: 'Save your work',
+            message: 'Save your changes in the file.'
+        })
+
+        if (choice === 0) {
+            e.preventDefault()
+
+            FileFunctions.saveFile()
+        }
+    })
 })
 
 class FileFunctions {
@@ -269,7 +289,8 @@ class FileFunctions {
             return
         }
 
-        let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
+        //let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
+        let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value`)
 
         fs.writeFileSync(path, content)
 
@@ -279,10 +300,10 @@ class FileFunctions {
     }
 
     static async saveFileAs(withFileName = true) {
-        const allContents = webContents.getAllWebContents()
-        const focusedContents = allContents.filter(wc => wc.isFocused())
+        const focusedContent = webContents.getFocusedWebContents()
 
-        const editorValue = await focusedContents[0].executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
+        //const editorValue = await focusedContents[0].executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
+        let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value`)
 
         if (!withFileName) {
             dialog.showSaveDialog({
@@ -291,13 +312,13 @@ class FileFunctions {
                 ]
             }).then(result => {
                 // Write the contents of the div to the selected file
-                writeFile(result.filePath, editorValue, async (err) => {
+                writeFile(result.filePath, content, async (err) => {
                     if (err) {
                         console.log(err);
                     } else {
                         console.log('File saved');
 
-                        await focusedContents[0].executeJavaScript(`
+                        await focusedContent.executeJavaScript(`
                     document.title = 'Typeflow - ${result.filePath.replace(/^.*[\\\/]/, '')}'
                     `);
                     }
@@ -310,7 +331,7 @@ class FileFunctions {
                 ],
                 defaultPath: path
             }).then(result => {
-                writeFile(result.filePath, editorValue, async (err) => {
+                writeFile(result.filePath, content, async (err) => {
                     if (err) {
                         console.log(err);
                     } else {
@@ -495,5 +516,3 @@ class ViewFunctions {
         `)
     }
 }
-
-//Themes.createThemeFolder()
