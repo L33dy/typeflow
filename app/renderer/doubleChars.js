@@ -90,3 +90,6 @@ function addChar(char) {
     selection.removeAllRanges();
     selection.addRange(range);
 }
+
+// IMPORTANT
+// Double characters are being added after a word when trying to type normal word such as wouldn't -> wouldn''t

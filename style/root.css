@@ -20,18 +20,6 @@ html, body {
     }
 }
 
-/*.editor {
-    height: 90%;
-    padding: 2em 15% 0 15%;
-}
-
-@media only screen and (min-width: 1000px) {
-    .editor {
-        padding-left: 25%;
-        padding-right: 25%;
-    }
-}*/
-
 .source-code-view {
     background-color: #ececec;
     border: none;
