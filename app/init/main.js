@@ -246,8 +246,8 @@ app.on('ready', () => {
         if(mainWindow.title === "Typeflow" || !reg.test(mainWindow.title)) return
 
         const choice = dialog.showMessageBoxSync(mainWindow, {
-            type: 'none',
-            buttons: ['Save', 'Cancel'],
+            type: 'question',
+            buttons: ['Save and Exit', 'Exit without saving', 'Cancel'],
             defaultId: 0,
             title: 'Save your work',
             message: 'Save your changes in the file.'
@@ -258,6 +258,10 @@ app.on('ready', () => {
 
             FileFunctions.saveFile()
         }
+        else if(choice === 2) {
+            e.preventDefault()
+        }
+
     })
 })
 
@@ -302,8 +306,10 @@ class FileFunctions {
     static async saveFileAs(withFileName = true) {
         const focusedContent = webContents.getFocusedWebContents()
 
-        //const editorValue = await focusedContents[0].executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
+        //let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
         let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value`)
+
+        console.log(content)
 
         if (!withFileName) {
             dialog.showSaveDialog({

@@ -41,8 +41,6 @@ function removeChars(node, currBracket) {
     var sel = window.getSelection()
     var caretPos = sel.getRangeAt(0).startOffset
 
-    console.log(node.parentElement.textContent.charAt(caretPos))
-
     if(currBracket === undefined) {
         return
     }
@@ -79,6 +77,14 @@ function removeChars(node, currBracket) {
 }
 
 function addChar(char) {
+    var node = Editor.getCurrentNode()
+
+    // Check for space
+    var a = node.parentElement.textContent.charAt(node.parentElement.textContent.length - 1)
+    var reg = /\s/
+
+    if(!reg.test(a)) return
+
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
     const newNode = document.createTextNode(char);
@@ -90,6 +96,3 @@ function addChar(char) {
     selection.removeAllRanges();
     selection.addRange(range);
 }
-
-// IMPORTANT
-// Double characters are being added after a word when trying to type normal word such as wouldn't -> wouldn''t

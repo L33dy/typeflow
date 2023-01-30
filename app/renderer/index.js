@@ -1,7 +1,6 @@
 const marked = require('marked')
 const TurndownService = require('turndown')
 
-
 let td = new TurndownService({
     headingStyle: 'atx',
     emDelimiter: '*',
@@ -27,11 +26,18 @@ td.addRule('strikethrough', {
     }
 })
 
+td.addRule('br', {
+    filter: ['br'],
+    replacement: function () {
+        return '<br>'
+    }
+})
+
 let sourceCode = document.getElementById("source-code")
 let editor = document.getElementById("editor")
 
-editor.addEventListener('input', () => {
+editor.addEventListener('keydown', (e) => {
     sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, '&quot;')
 
-    window.scroll(0, document.body.scrollHeight)
+    Editor.scrollToBottom()
 })

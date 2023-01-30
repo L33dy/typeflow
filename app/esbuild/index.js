@@ -23524,6 +23524,14 @@ var require_turndown_cjs = __commonJS({
         }
       }
     };
+    rules.underline = {
+      filter: "u",
+      replacement: function(content, node, options) {
+        if (!content.trim())
+          return "";
+        return "<u>" + content + "</u>";
+      }
+    };
     rules.listItem = {
       filter: "li",
       replacement: function(content, node, options) {
@@ -24116,11 +24124,17 @@ td.addRule("strikethrough", {
     return "<del>" + content + "</del>";
   }
 });
+td.addRule("br", {
+  filter: ["br"],
+  replacement: function() {
+    return "<br>";
+  }
+});
 var sourceCode = document.getElementById("source-code");
 var editor = document.getElementById("editor");
-editor.addEventListener("input", () => {
+editor.addEventListener("keydown", (e) => {
   sourceCode.value = td.turndown(editor.innerHTML).replace(/"/g, "&quot;");
-  window.scroll(0, document.body.scrollHeight);
+  Editor.scrollToBottom();
 });
 /*! Bundled license information:
 

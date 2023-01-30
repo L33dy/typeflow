@@ -97,4 +97,16 @@ class Editor {
         }
     }
 
+    static scrollToBottom() {
+        let lastNode = this.getLastNode()
+        let currNode = this.getCurrentNode()
+
+        let lastChar = lastNode.textContent.charAt(lastNode.textContent.length - 1)
+        let currChar = currNode.textContent.charAt(currNode.textContent.length - 1)
+
+        if(currChar !== lastChar) return
+
+        window.scroll(0, document.body.scrollHeight)
+    }
+
 }
