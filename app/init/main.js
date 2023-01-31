@@ -205,6 +205,20 @@ app.on('ready', () => {
                         Editor.triggerInput()
                         `)
                     }
+                },
+                {
+                    type: "separator"
+                },
+                {
+                    label: "Switch letter case",
+                    accelerator: "CmdOrCtrl+L",
+                    async click() {
+                        var focusedContent = webContents.getFocusedWebContents()
+
+                        await focusedContent.executeJavaScript(`
+                            Format.switchCase()
+                        `)
+                    }
                 }
             ]
         },
