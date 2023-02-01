@@ -210,7 +210,7 @@ app.on('ready', () => {
                     type: "separator"
                 },
                 {
-                    label: "Switch letter case",
+                    label: "Toggle Letter Case",
                     accelerator: "CmdOrCtrl+L",
                     async click() {
                         var focusedContent = webContents.getFocusedWebContents()

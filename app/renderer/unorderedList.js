@@ -4,10 +4,7 @@ let previousKey = ""
 editor.addEventListener('keydown', (e) => {
     let currentNode = document.getSelection().anchorNode
 
-    if(e.key === "Backspace") {
-        //e.preventDefault()
-    }
-
+    // Create unordered list
     if (currentNode.textContent === "-" && e.code === "Space") {
         e.preventDefault()
 
@@ -20,14 +17,10 @@ editor.addEventListener('keydown', (e) => {
 
         currentNode.remove()
 
-        let range = document.createRange();
-        let sel = window.getSelection();
-        range.setStart(ul.firstChild, 0);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
+        setCaretPosition(ul.firstChild)
     }
 
+    // Nest
     if (e.code === "Tab" && currentNode.nodeName === "LI") {
         e.preventDefault()
 
@@ -35,25 +28,27 @@ editor.addEventListener('keydown', (e) => {
         currentNode.previousElementSibling.appendChild(ul)
         let li = document.createElement("li")
         ul.appendChild(li)
-        let range = document.createRange();
-        let sel = window.getSelection();
-        range.setStart(li, 0);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
+
+        setCaretPosition(li)
 
         currentNode.remove()
     }
 
+    // Denest
     if (e.code === "Enter" && currentNode.nodeName === "LI" || e.code === "NumpadEnter" && currentNode.nodeName === "LI") {
         e.preventDefault()
 
+        // Remove unordered list
         if (!currentNode.previousElementSibling || currentNode.parentNode.parentNode.nodeName === "DIV") {
             // remove the UL
-            currentNode.remove()
 
             let div = document.createElement("div")
             div.appendChild(document.createElement("br"))
+
+            currentNode.parentElement.insertAdjacentElement("afterend", div)
+            currentNode.remove()
+
+            setCaretPosition(div)
 
             currentNode = window.getSelection().anchorNode
 
@@ -61,10 +56,6 @@ editor.addEventListener('keydown', (e) => {
             if(currentNode.nodeName === "UL" && currentNode.innerHTML === "") {
                 currentNode.remove()
             }
-
-            editor.appendChild(div)
-
-            setCaretPosition()
 
             // Update source code
             Editor.triggerInput()
@@ -84,21 +75,16 @@ function denestList(node, currNode) {
     let li = document.createElement("li")
     startingNode.appendChild(li)
 
-    let range = document.createRange();
-    let sel = window.getSelection();
-    range.setStart(li, 0);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    setCaretPosition(li)
 
     currNode.remove()
 }
 
-function setCaretPosition(offset = 0) {
+function setCaretPosition(node, offset = 0) {
     var range = document.createRange()
     var sel = window.getSelection()
 
-    range.setStart(editor.lastChild, offset)
+    range.setStart(node, offset)
     range.collapse(true)
 
     sel.removeAllRanges()
