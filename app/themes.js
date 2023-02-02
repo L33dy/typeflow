@@ -7,34 +7,6 @@ const { app, webContents } = require('electron')
 const themePath = app.getAppPath() + "/themes"
 
 module.exports =  class Themes {
-    /*static createThemeFolder() {
-        if(!fs.existsSync(appDataPath)) {
-            fs.mkdirSync(appDataPath, { recursive: true })
-
-            createDefaultTheme()
-        }
-
-        this.importAllThemes()
-    }
-
-    static importAllThemes() {
-        const themes = fs.readdirSync(appDataPath)
-
-        const projectThemeFolder = app.getAppPath() + "/themes"
-
-        // delete current contents of project themes folder
-        fs_extra.emptydirSync(projectThemeFolder)
-
-        for (let i = 0; i < themes.length; i++) {
-            let themeName = themes[i]
-            let pathToTheme = path.join(appDataPath, themeName)
-
-            let themeContent = fs.readFileSync(pathToTheme, 'utf-8')
-
-            fs.writeFileSync(path.join(projectThemeFolder, themeName), themeContent)
-        }
-    }*/
-
     static getThemeNames() {
         return fs.readdirSync(themePath)
     }

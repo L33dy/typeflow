@@ -1,6 +1,6 @@
 'use strict'
 
-const {app, BrowserWindow, Menu, webContents, dialog} = require('electron')
+const {app, BrowserWindow, Menu, webContents, dialog, shell} = require('electron')
 const {writeFile, readFile} = require('fs')
 const fs = require('fs')
 let path = require("path");
@@ -248,6 +248,17 @@ app.on('ready', () => {
                     role: "toggleDevTools"
                 }
             ]
+        },
+        {
+            label: "Help",
+            submenu: [
+                {
+                    label: "Check For Updates",
+                    async click() {
+                        checkForUpdates()
+                    }
+                }
+            ]
         }
     ]
 
@@ -257,7 +268,7 @@ app.on('ready', () => {
     mainWindow.on('close', async (e) => {
         let reg = /Typeflow - .*•/
 
-        if(mainWindow.title === "Typeflow" || !reg.test(mainWindow.title)) return
+        if (mainWindow.title === "Typeflow" || !reg.test(mainWindow.title)) return
 
         const choice = dialog.showMessageBoxSync(mainWindow, {
             type: 'question',
@@ -271,11 +282,14 @@ app.on('ready', () => {
             e.preventDefault()
 
             FileFunctions.saveFile()
-        }
-        else if(choice === 2) {
+        } else if (choice === 2) {
             e.preventDefault()
         }
 
+    })
+
+    mainWindow.webContents.once('dom-ready', () => {
+        checkForUpdates()
     })
 })
 
@@ -522,16 +536,42 @@ class ViewFunctions {
 
         focusedContent.executeJavaScript(`
         var sourceCode = document.getElementById("source-code")
-        var markIt = document.getElementById("editor")
+        var editor = document.getElementById("editor-container")
         
         if(sourceCode.style.display === "none") {
             sourceCode.style.display = "block"
-            markIt.style.display = "none"
+            editor.style.display = "none"
         }
         else {
             sourceCode.style.display = "none"
-            markIt.style.display = "block"
+            editor.style.display = "block"
         }
         `)
+    }
+}
+
+async function checkForUpdates() {
+    var focusedContent = webContents.getFocusedWebContents()
+
+    const installedVersion = process.env.npm_package_version
+
+    const latestVersion = await focusedContent.executeJavaScript(`
+                        Updates.getLatestRelease()
+                        `)
+
+    if (latestVersion !== "v" + installedVersion + "b") {
+        console.log("Old version is installed.")
+
+        const choice = dialog.showMessageBoxSync(mainWindow, {
+            type: 'none',
+            buttons: ['Install', 'Cancel'],
+            defaultId: 0,
+            title: 'New Typeflow version available!',
+            message: 'Install the new version for stable application and improved functionality.'
+        })
+
+        if(choice === 0) {
+            await shell.openExternal("https://github.com/L33dy/typeflow/releases")
+        }
     }
 }
