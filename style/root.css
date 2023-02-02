@@ -13,6 +13,11 @@ html, body {
     height: 100%;
 }
 
+/*.editor-container > .editor {
+    min-height: calc(100% - 100px);
+    height: fit-content;
+}*/
+
 @media only screen and (min-width: 1000px) {
     .editor-container {
         padding-right: 25%;

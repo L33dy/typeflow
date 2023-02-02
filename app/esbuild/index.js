@@ -23524,14 +23524,6 @@ var require_turndown_cjs = __commonJS({
         }
       }
     };
-    rules.underline = {
-      filter: "u",
-      replacement: function(content, node, options) {
-        if (!content.trim())
-          return "";
-        return "<u>" + content + "</u>";
-      }
-    };
     rules.listItem = {
       filter: "li",
       replacement: function(content, node, options) {

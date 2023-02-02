@@ -560,14 +560,12 @@ async function checkForUpdates() {
                         `)
 
     if (latestVersion !== "v" + installedVersion + "b") {
-        console.log("Old version is installed.")
-
         const choice = dialog.showMessageBoxSync(mainWindow, {
             type: 'none',
             buttons: ['Install', 'Cancel'],
             defaultId: 0,
             title: 'New Typeflow version available!',
-            message: 'Install the new version for stable application and improved functionality.'
+            message: 'Install the new version for new content and improved functionality.'
         })
 
         if(choice === 0) {
