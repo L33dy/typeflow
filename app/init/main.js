@@ -317,15 +317,14 @@ class FileFunctions {
         `)
     }
 
-    static async saveFileAs(withFileName = true) {
+    static async saveFileAs() {
         const focusedContent = webContents.getFocusedWebContents()
 
         //let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
         let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value`)
+        let isSaved = await focusedContent.executeJavaScript(`Title.isDocumentSaved()`)
 
-        console.log(content)
-
-        if (!withFileName) {
+        if (!isSaved) {
             dialog.showSaveDialog({
                 filters: [
                     {name: 'Markdown', extensions: ['md']}
