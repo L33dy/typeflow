@@ -20,3 +20,6 @@ It is made with modern web technologies such as HTML5, JavaScript and Node.js.
 
 ## Buy me a coffee!
 You can [buy me](https://buymeacoffee.com/l33dy) a coffee if you liked Typeflow!
+
+## Bugs, feature requests etc.
+If you've found a bug or have an idea for a feature, you can navigate to the [Issues](https://github.com/L33dy/typeflow/issues).
