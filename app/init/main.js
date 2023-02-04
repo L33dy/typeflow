@@ -243,9 +243,6 @@ app.on('ready', () => {
                     click() {
                         ViewFunctions.toggleSourceMode()
                     }
-                },
-                {
-                    role: "toggleDevTools"
                 }
             ]
         },
@@ -553,18 +550,23 @@ class ViewFunctions {
 async function checkForUpdates() {
     var focusedContent = webContents.getFocusedWebContents()
 
-    const installedVersion = process.env.npm_package_version
+    const pjsonPath = app.getAppPath() + "/package.json"
+    let json = JSON.parse(fs.readFileSync(pjsonPath, 'utf-8'))
+    const installedVersion = "v" + json.version + "b"
 
     const latestVersion = await focusedContent.executeJavaScript(`
                         Updates.getLatestRelease()
                         `)
 
-    if (latestVersion !== "v" + installedVersion + "b") {
+    console.log(installedVersion)
+    console.log(latestVersion)
+
+    if (latestVersion !== installedVersion && latestVersion !== "") {
         const choice = dialog.showMessageBoxSync(mainWindow, {
             type: 'none',
             buttons: ['Install', 'Cancel'],
             defaultId: 0,
-            title: 'New Typeflow version available!',
+            title: `New Typeflow version is available!`,
             message: 'Install the new version for new content and improved functionality.'
         })
 
