@@ -13,7 +13,7 @@ html, body {
     height: 100%;
 }
 
-.editor-container > .editor {
+.editor-container > #editor {
     min-height: calc(100% - 100px);
     height: fit-content;
 }

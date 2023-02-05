@@ -101,14 +101,14 @@ class Editor {
         let lastNode = this.getLastNode()
         let currNode = this.getCurrentNode()
 
-        var index = Array.prototype.indexOf.call(currNode.parentNode.children, currNode)
+        /*var index = Array.prototype.indexOf.call(currNode.parentNode.children, currNode)
 
         currNode.className = index
 
         let lastCharIndex = lastNode.className
         let currCharIndex = currNode.className
 
-        if(currCharIndex !== lastCharIndex) return
+        if(currCharIndex !== lastCharIndex) return*/
 
         window.scroll(0, document.body.scrollHeight)
     }

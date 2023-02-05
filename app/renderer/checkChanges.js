@@ -1,6 +1,6 @@
 var editor = document.getElementById("editor")
 
-editor.addEventListener('input', () => {
+editor.addEventListener('keypress', () => {
     addMark()
 })
 

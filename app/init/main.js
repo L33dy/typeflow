@@ -243,6 +243,9 @@ app.on('ready', () => {
                     click() {
                         ViewFunctions.toggleSourceMode()
                     }
+                },
+                {
+                    role: "toggleDevTools"
                 }
             ]
         },
@@ -287,6 +290,13 @@ app.on('ready', () => {
 
     mainWindow.webContents.once('dom-ready', () => {
         checkForUpdates()
+
+        try {
+            checkOpenFileWith()
+        }
+        catch(e) {
+
+        }
     })
 })
 
@@ -401,7 +411,7 @@ class FileFunctions {
                         
                         Editor.setSelectorPosition(Editor.getLastNode())
                         
-                        // Editor.triggerInput()
+                        Editor.triggerInput()
                         `);
                 }
             });
@@ -570,8 +580,30 @@ async function checkForUpdates() {
             message: 'Install the new version for new content and improved functionality.'
         })
 
-        if(choice === 0) {
+        if (choice === 0) {
             await shell.openExternal("https://github.com/L33dy/typeflow/releases")
         }
+    }
+}
+
+async function checkOpenFileWith() {
+    var focusedContent = webContents.getFocusedWebContents()
+
+    if(process.argv.length >= 2) {
+        let filePath = process.argv[1]
+
+        let fileContent = fs.readFileSync(filePath, 'utf-8')
+
+        await focusedContent.executeJavaScript(`
+        
+        document.getElementById('source-code').value = "${fileContent.replace(/\r\n|\r|\n/g, '\\n').replace(/"/g, '&quot;')}"
+        var editor = document.getElementById("editor")
+        editor.innerHTML = marked.parse(sourceCode.value)
+        document.title = 'Typeflow - ${filePath.replace(/^.*[\\\/]/, '')}'
+                        
+        Editor.setSelectorPosition(Editor.getLastNode())
+        
+        Editor.triggerInput()
+        `)
     }
 }
