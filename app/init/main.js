@@ -261,9 +261,6 @@ app.on('ready', () => {
                     click() {
                         ViewFunctions.scrollToBottom()
                     }
-                },
-                {
-                    role: "toggleDevTools"
                 }
             ]
         },
