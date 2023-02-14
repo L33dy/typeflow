@@ -101,16 +101,14 @@ class Editor {
         let lastNode = this.getLastNode()
         let currNode = this.getCurrentNode()
 
-        /*var index = Array.prototype.indexOf.call(currNode.parentNode.children, currNode)
+        let currentScroll = window.innerHeight + window.scrollY
+        let documentHeight = document.body.scrollHeight
 
-        currNode.className = index
+        console.log(currentScroll + " " + documentHeight)
 
-        let lastCharIndex = lastNode.className
-        let currCharIndex = currNode.className
-
-        if(currCharIndex !== lastCharIndex) return*/
-
-        window.scroll(0, document.body.scrollHeight)
+        if(currentScroll <= documentHeight && currentScroll >= documentHeight - 75) {
+            window.scrollTo(0, document.body.scrollHeight)
+        }
     }
-
 }
+

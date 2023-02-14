@@ -57,9 +57,10 @@ app.on('ready', () => {
                     type: 'separator'
                 },
                 {
-                    label: "Quit",
+                    label: "Exit",
+                    accelerator: "CmdOrCtrl+E",
                     click() {
-                        app.quit()
+                        mainWindow.close()
                     }
                 }
             ]
@@ -121,6 +122,13 @@ app.on('ready', () => {
                     click() {
                         ParagraphFunctions.addUnorderedList()
                     }
+                },
+                {
+                  label: "Ordered list",
+                  accelerator: "CmdOrCtrl+Shift+O",
+                  click() {
+                      ParagraphFunctions.addOrderedList()
+                  }
                 },
                 {
                     type: "separator"
@@ -242,6 +250,16 @@ app.on('ready', () => {
                     accelerator: "CmdOrCtrl+K",
                     click() {
                         ViewFunctions.toggleSourceMode()
+                    }
+                },
+                {
+                  type: "separator"
+                },
+                {
+                    label: "Scroll To Bottom",
+                    accelerator: "CmdOrCtrl+Down",
+                    click() {
+                        ViewFunctions.scrollToBottom()
                     }
                 },
                 {
@@ -504,6 +522,15 @@ class ParagraphFunctions {
 
     }
 
+    static async addOrderedList() {
+        const focusedContent = webContents.getFocusedWebContents()
+        await focusedContent.executeJavaScript(`
+        
+        document.execCommand('insertOrderedList')
+        
+        `)
+    }
+
     static async addHeading(num) {
         const allContents = webContents.getAllWebContents()
         const focusedContents = allContents.filter(wc => wc.isFocused())
@@ -538,6 +565,14 @@ class ParagraphFunctions {
 }
 
 class ViewFunctions {
+    static scrollToBottom() {
+        const focusedContent = webContents.getFocusedWebContents()
+
+        focusedContent.executeJavaScript(`
+        window.scrollTo(0, document.body.scrollHeight)
+        `)
+    }
+
     static toggleSourceMode() {
         const focusedContent = webContents.getFocusedWebContents()
 
@@ -568,15 +603,21 @@ async function checkForUpdates() {
                         Updates.getLatestRelease()
                         `)
 
-    console.log(installedVersion)
-    console.log(latestVersion)
+    if(latestVersion === "") {
+        checkForUpdates()
+
+        return
+    }
+
+    console.log("Installed version: " + installedVersion)
+    console.log("Latest version: " + latestVersion)
 
     if (latestVersion !== installedVersion && latestVersion !== "") {
         const choice = dialog.showMessageBoxSync(mainWindow, {
             type: 'none',
             buttons: ['Install', 'Cancel'],
             defaultId: 0,
-            title: `New Typeflow version is available!`,
+            title: `New Typeflow version ${latestVersion} is available!`,
             message: 'Install the new version for new content and improved functionality.'
         })
 

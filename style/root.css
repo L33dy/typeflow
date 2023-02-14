@@ -75,6 +75,7 @@ html, body {
     transition: 175ms;
 
     user-select: none;
+    cursor: pointer;
 }
 
 /* custom scrollbar */
