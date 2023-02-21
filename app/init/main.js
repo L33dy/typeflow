@@ -297,6 +297,7 @@ app.on('ready', () => {
             e.preventDefault()
 
             FileFunctions.saveFile()
+            app.exit()
         } else if (choice === 2) {
             e.preventDefault()
         }
@@ -315,8 +316,9 @@ app.on('ready', () => {
     })
 })
 
+var filePath = ""
+
 class FileFunctions {
-    path = ""
 
     /*static async exportToPDF() {
         const pdf = await mdToPdf({ path: path }).catch(console.log("error"))
@@ -346,7 +348,7 @@ class FileFunctions {
         //let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
         let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value`)
 
-        fs.writeFileSync(path, content)
+        fs.writeFileSync(filePath, content)
 
         await webContents.getFocusedWebContents().executeJavaScript(`
         document.title = document.title.replace("•", "")
@@ -356,7 +358,6 @@ class FileFunctions {
     static async saveFileAs() {
         const focusedContent = webContents.getFocusedWebContents()
 
-        //let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value.replace(/(\\n\\n)/g, "  \\n")`)
         let content = await focusedContent.executeJavaScript(`document.getElementById("source-code").value`)
         let isSaved = await focusedContent.executeJavaScript(`Title.isDocumentSaved()`)
 
@@ -384,7 +385,7 @@ class FileFunctions {
                 filters: [
                     {name: 'Markdown', extensions: ['md']}
                 ],
-                defaultPath: path
+                defaultPath: filePath
             }).then(result => {
                 writeFile(result.filePath, content, async (err) => {
                     if (err) {
@@ -392,7 +393,7 @@ class FileFunctions {
                     } else {
                         console.log('File saved');
 
-                        await focusedContents[0].executeJavaScript(`
+                        await focusedContent.executeJavaScript(`
                     document.title = 'Typeflow - ${result.filePath.replace(/^.*[\\\/]/, '')}'
                     `);
                     }
@@ -413,7 +414,7 @@ class FileFunctions {
                     console.log(err);
                 } else {
                     console.log(result.filePaths[0])
-                    path = result.filePaths[0]
+                    filePath = result.filePaths[0]
 
                     const allContents = webContents.getAllWebContents()
                     const focusedContents = allContents.filter(wc => wc.isFocused())
@@ -628,7 +629,7 @@ async function checkOpenFileWith() {
     var focusedContent = webContents.getFocusedWebContents()
 
     if(process.argv.length >= 2) {
-        let filePath = process.argv[1]
+        filePath = process.argv[1]
 
         let fileContent = fs.readFileSync(filePath, 'utf-8')
 

@@ -40,7 +40,7 @@ h1 {
 
     width: 100%;
     text-align: center;
-    margin: 1.5rem auto;
+    margin: 2.75rem 0 1.5rem 0;
 
     font-size: 2em;
     font-weight: 500;
@@ -58,7 +58,7 @@ h1::before {
 }
 
 h2 {
-    margin: 1.25rem 0 0.6rem 0;
+    margin: 2.5rem 0 0.45rem 0;
 
     border-left: 6px solid;
     border-left-color: var(--primary);
@@ -69,7 +69,7 @@ h2 {
 }
 
 h3 {
-    margin: 1rem 0 0.45rem 0;
+    margin: 2.5rem 0 0.45rem 0;
 
     font-size: 1.45em;
     font-weight: 500;
@@ -85,10 +85,11 @@ h3::before {
     border-radius: 50%;
 
     margin-right: 6px;
+    margin-bottom: 3px;
 }
 
 h4 {
-    margin: 1rem 0 0.45rem 0;
+    margin: 2rem 0 0.45rem 0;
 
     font-size: 1.25em;
     font-weight: 500;
